@@ -1,0 +1,90 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Gary\\Desktop\\DoomScroll - Among Us mod\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll\\DoomScroll.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Gary\\Desktop\\DoomScroll - Among Us mod\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll\\DoomScroll.csproj": {
+      "version": "1.0.0-dev",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Gary\\Desktop\\DoomScroll - Among Us mod\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll\\DoomScroll.csproj",
+        "projectName": "DoomScroll",
+        "projectPath": "C:\\Users\\Gary\\Desktop\\DoomScroll - Among Us mod\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll\\DoomScroll.csproj",
+        "packagesPath": "C:\\Users\\Gary\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gary\\Desktop\\DoomScroll - Among Us mod\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Gary\\Desktop\\DoomScroll - Among Us mod\\Doom-Scroll---Among-Us-mod\\DoomScroll\\NuGet.Config",
+          "C:\\Users\\Gary\\Desktop\\DoomScroll - Among Us mod\\Doom-Scroll---Among-Us-mod\\NuGet.Config",
+          "C:\\Users\\Gary\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.bepinex.dev/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "AmongUs.GameLibs.Steam": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2022.6.21, )"
+            },
+            "BepInEx.AutoPlugin": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "BepInEx.IL2CPP": {
+              "target": "Package",
+              "version": "[6.0.0-be.570, )"
+            },
+            "BepInEx.IL2CPP.MSBuild": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Reactor": {
+              "target": "Package",
+              "version": "[1.2.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
