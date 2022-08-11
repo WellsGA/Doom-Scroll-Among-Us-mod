@@ -1,2 +1,4 @@
 # Doom-Scroll---Among-Us-mod
-Hello
+## Resources
+-https://github.com/BepInEx/BepInEx/releases
+-https://github.com/NuclearPowered/Reactor/releases
