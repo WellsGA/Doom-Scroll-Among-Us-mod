@@ -4,7 +4,7 @@ using BepInEx.IL2CPP;
 using HarmonyLib;
 using Reactor;
 
-namespace DoomScroll;
+namespace DoomScroll { 
 
 [BepInAutoPlugin]
 [BepInProcess("Among Us.exe")]
@@ -30,4 +30,6 @@ public partial class DoomScrollPlugin : BasePlugin
             __instance.cosmetics.nameText.text = PluginSingleton<DoomScrollPlugin>.Instance.ConfigName.Value;
         }
     }
+}
+
 }
