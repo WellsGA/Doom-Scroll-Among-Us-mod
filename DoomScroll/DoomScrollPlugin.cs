@@ -17,7 +17,7 @@ public partial class DoomScrollPlugin : BasePlugin
 
     public override void Load()
     {
-        ConfigName = Config.Bind("Fake", "Name", ":>");
+        ConfigName = Config.Bind("Fake", "Name", ":)");
 
         Harmony.PatchAll();
     }
