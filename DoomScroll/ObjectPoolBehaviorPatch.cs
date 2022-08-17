@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace DoomScroll
 {
+    //Disable chat scrolling limit:
     [HarmonyPatch(typeof(ObjectPoolBehavior), nameof(ObjectPoolBehavior.Reclaim))]
     public static class ObjectPoolBehaviorReclaimPatch
     {
