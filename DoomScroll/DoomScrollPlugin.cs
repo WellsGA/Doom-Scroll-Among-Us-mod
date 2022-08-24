@@ -6,30 +6,19 @@ using Reactor;
 
 namespace DoomScroll { 
 
-[BepInAutoPlugin]
-[BepInProcess("Among Us.exe")]
-[BepInDependency(ReactorPlugin.Id)]
-public partial class DoomScrollPlugin : BasePlugin
-{
-    public Harmony Harmony { get; } = new(Id);
-
-    public ConfigEntry<string> ConfigName { get; private set; }
-
-    public override void Load()
+    [BepInAutoPlugin]
+    [BepInProcess("Among Us.exe")]
+    [BepInDependency(ReactorPlugin.Id)]
+    public partial class DoomScrollPlugin : BasePlugin
     {
-        ConfigName = Config.Bind("Fake", "Name", ":)");
+        public Harmony Harmony { get; } = new(Id);
 
-        Harmony.PatchAll();
-    }
-
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
-    public static class ExamplePatch
-    {
-        public static void Postfix(PlayerControl __instance)
+        public override void Load()
         {
-            __instance.cosmetics.nameText.text = PluginSingleton<DoomScrollPlugin>.Instance.ConfigName.Value;
+            Logger<DoomScrollPlugin>.Info(" ---------  DoomScroll Plugin Loaded ---------");
+            Harmony.PatchAll();
         }
+
     }
-}
 
 }
