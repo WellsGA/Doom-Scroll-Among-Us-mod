@@ -23,7 +23,7 @@ namespace DoomScroll
             m_spriterenderer.sprite = buttonImg;
            
             float scale = size.x / m_spriterenderer.size.x;
-            m_spriterenderer.transform.localScale *= scale * 0.8f;
+            m_spriterenderer.transform.localScale *= scale;
 
             // debug: Logger<DoomScrollPlugin>.Info(" sprite renderer size: " + m_spriterenderer.size);
 
