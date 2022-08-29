@@ -17,6 +17,8 @@ namespace DoomScroll {
         {
             Logger<DoomScrollPlugin>.Info(" ---------  DoomScroll Plugin Loaded ---------");
             Harmony.PatchAll();
+            HudManagerPatch.InitHudManager();
+
         }
 
     }
