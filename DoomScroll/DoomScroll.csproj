@@ -26,6 +26,7 @@
     </ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Assets\cameraFlash.png" />
+		<EmbeddedResource Include="Assets\cameraOverlay.png" />
 	</ItemGroup>
     <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" UseSymboliclinksIfPossible="true" />

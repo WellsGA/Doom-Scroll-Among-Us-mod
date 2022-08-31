@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using HarmonyLib;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 using Reactor;
 using System.Reflection;
 
@@ -15,25 +13,27 @@ namespace DoomScroll
     public static class HudManagerPatch
     {
         public static event Action m_listener;
-        private static CustomButton m_buttonGo;
+        private static CustomButton m_cameraButton;
+        public static GameObject UIParent { get; private set; }
 
-        internal static void InitHudManager()
-        {
-            m_listener += OnClickCamera;
-            Logger<DoomScrollPlugin>.Info("init hud manager called");
 
-        }
         [HarmonyPostfix]
         [HarmonyPatch("Start")]
         public static void Postfix(HudManager __instance)
         {
-            GameObject parent = __instance.gameObject;
+            // Create custom screenshot button
+            UIParent = __instance.gameObject;
             Vector3 mapBtnPos = __instance.MapButton.gameObject.transform.position;
             Vector3 position = new Vector3(mapBtnPos.x, mapBtnPos.y - __instance.MapButton.size.y * __instance.MapButton.transform.localScale.y, mapBtnPos.z);
+            Vector2 size = __instance.MapButton.size * __instance.MapButton.transform.localScale;
 
             Sprite customButtonSprite = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png");
-            m_buttonGo = new CustomButton(position, parent, customButtonSprite, __instance.MapButton.size * __instance.MapButton.transform.localScale);
-           // sadly this doesn't work... // m_buttonGo.m_Button.onClick.AddListener(m_listener);
+            m_cameraButton = new CustomButton(UIParent, customButtonSprite, position, size);
+
+            // sadly this doesn't work... // m_buttonGo.m_Button.onClick.AddListener(m_listener);
+
+            // subscribe method to call on buttonclick
+            m_listener += OnClickCamera;
 
         }
 
@@ -44,47 +44,23 @@ namespace DoomScroll
         {
             try
             {
-               
-                if (IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
+                // Invoke the subscribing methods on mouse click 
+                if (m_cameraButton.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
                     m_listener?.Invoke();
-                }
-               
+                }       
             }
-            catch
+            catch(Exception e)
             {
-                Logger<DoomScrollPlugin>.Error("Couldn't invoke delegate methods.");
+                Logger<DoomScrollPlugin>.Error("Error invoking method: " + e);
             }
         }
 
         static void OnClickCamera()
         {
-            // To DO: Implement onClick behavior
-            Logger<DoomScrollPlugin>.Info("CAMERA BUTTON PRESSED");
+            ScreenshotManager.Instance.ToggleCamera();
         }
 
-        static bool IsClicked() 
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // bool isOnSprite = m_buttonGo.m_Spriterenderer.bounds.Contains(mousePos);
-
-            Vector3 itemPos = m_buttonGo.m_Spriterenderer.transform.position;
-             Vector3 itemScale = m_buttonGo.m_Spriterenderer.bounds.extents;
-
-             bool isInBoundsX = itemPos.x - itemScale.x  < mousePos.x && itemPos.x + itemScale.x > mousePos.x;
-             bool isInBoundsY = itemPos.y - itemScale.y < mousePos.y && itemPos.y + itemScale.y > mousePos.y;
-
-            if (isInBoundsX && isInBoundsY)
-            {
-                m_buttonGo.m_Spriterenderer.color = Color.cyan;
-            } else
-            {
-                m_buttonGo.m_Spriterenderer.color = Color.white;
-            }
-
-            // return isOnSprite && Input.GetKeyUp(KeyCode.Mouse0);
-            return isInBoundsX && isInBoundsY; 
-           
-        }
+        
     }
 }
