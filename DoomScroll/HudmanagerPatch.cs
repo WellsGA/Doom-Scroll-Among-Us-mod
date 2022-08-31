@@ -13,8 +13,9 @@ namespace DoomScroll
     public static class HudManagerPatch
     {
         public static event Action m_listener;
+        
         private static CustomButton m_cameraButton;
-        public static GameObject UIParent { get; private set; }
+        private static GameObject m_UIParent;
 
 
         [HarmonyPostfix]
@@ -22,21 +23,19 @@ namespace DoomScroll
         public static void Postfix(HudManager __instance)
         {
             // Create custom screenshot button
-            UIParent = __instance.gameObject;
+            m_UIParent = __instance.gameObject;
             Vector3 mapBtnPos = __instance.MapButton.gameObject.transform.position;
             Vector3 position = new Vector3(mapBtnPos.x, mapBtnPos.y - __instance.MapButton.size.y * __instance.MapButton.transform.localScale.y, mapBtnPos.z);
             Vector2 size = __instance.MapButton.size * __instance.MapButton.transform.localScale;
 
             Sprite customButtonSprite = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png");
-            m_cameraButton = new CustomButton(UIParent, customButtonSprite, position, size);
+            m_cameraButton = new CustomButton(m_UIParent, customButtonSprite, position, size);
 
             // sadly this doesn't work... // m_buttonGo.m_Button.onClick.AddListener(m_listener);
 
             // subscribe method to call on buttonclick
             m_listener += OnClickCamera;
-
         }
-
 
         [HarmonyPostfix]
         [HarmonyPatch("Update")]
@@ -48,7 +47,11 @@ namespace DoomScroll
                 if (m_cameraButton.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
                     m_listener?.Invoke();
-                }       
+                }
+                if (ScreenshotManager.Instance.CaptureScreenButton.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
+                {
+                    OnClickCaptureScreenshot();
+                }
             }
             catch(Exception e)
             {
@@ -61,6 +64,10 @@ namespace DoomScroll
             ScreenshotManager.Instance.ToggleCamera();
         }
 
-        
+        static void OnClickCaptureScreenshot()
+        {
+            ScreenshotManager.Instance.CaptureScreenshot();
+        }
+
     }
 }
