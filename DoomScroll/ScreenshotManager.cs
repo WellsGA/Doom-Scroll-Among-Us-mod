@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.UI;
 using Reactor;
 using System.Reflection;
 
@@ -42,9 +42,8 @@ namespace DoomScroll
             // get HudManager Instance and main Camera
             hudManagerInsance = DestroyableSingleton<HudManager>.Instance;
             mainCamrea = hudManagerInsance.GetComponentInParent<Camera>();
-            // create camera button
+           
             CreateCameraButton();
-            // init screenshot overlay
             InitScreenshotOverlay();
         }
 
@@ -66,7 +65,6 @@ namespace DoomScroll
             }
             Logger<DoomScrollPlugin>.Info("Camera overlay active: " + m_isCameraOpen);
         }
-
 
         private void CreateCameraButton() 
         {
@@ -103,37 +101,49 @@ namespace DoomScroll
             m_cameraOverlay.SetActive(false);
         }
 
-        // This could be a coroutine!!
+
         private void CaptureScreenshot()
         {  
             // check for null refernce 
             if (mainCamrea)
             {
-                // hide player
-                PlayerControl.LocalPlayer.gameObject.SetActive(false);
+
+                // hide player and overlay
+                ShowOverlays(false);
 
                 // use the main camera to render screen into a texture
                 RenderTexture screenTexture = new RenderTexture(Screen.width, Screen.height, 20);
                 mainCamrea.targetTexture = screenTexture;
                 RenderTexture.active = screenTexture;
                 mainCamrea.Render();
+                
                 Texture2D screeenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
                 screeenShot.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-                
-                // reset camera and player
-                PlayerControl.LocalPlayer.gameObject.SetActive(true);
-                RenderTexture.active = null;
+                // screeenShot.Apply();
+
+                // reset camera, show player and overlay
+                // RenderTexture.active = null;
+                screenTexture.Release();
                 mainCamrea.targetTexture = null;
                 UnityEngine.Object.Destroy(screenTexture);
                 
+                ShowOverlays(true);
+
                 // save the image locally -- for now... this must be changed!
                 byte[] byteArray = screeenShot.EncodeToPNG();
                 System.IO.File.WriteAllBytes(Application.dataPath + "/cameracapture_" + m_screenshots + ".png", byteArray);
-                
+                UnityEngine.Object.Destroy(screeenShot);
+
                 m_screenshots++;
                 Logger<DoomScrollPlugin>.Info("number of screenshots: " + m_screenshots);
             }
 
+        }
+
+        private void ShowOverlays(bool value)
+        {
+            PlayerControl.LocalPlayer.gameObject.SetActive(value);
+            m_cameraOverlay.SetActive(value);
         }
 
         // methods subscribing to the button click events 
@@ -151,6 +161,7 @@ namespace DoomScroll
             {
                 CameraButton.ActivateButton(false);
             }
+
         }
     }
 }
