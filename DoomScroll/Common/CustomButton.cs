@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace DoomScroll
+namespace DoomScroll.Common
 {
     // Creates and manages custom buttnos
     public class CustomButton
@@ -56,7 +56,7 @@ namespace DoomScroll
             }
             else 
             {
-                m_spriterenderer.color = new Color(1f, 1f, 1f, 0.5f);
+                m_spriterenderer.color = new Color(1f, 1f, 1f, 0.4f);
             }
             
         }

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using HarmonyLib;
 using UnityEngine;
 using Reactor;
+using DoomScroll.Common;
 
 
 namespace DoomScroll
@@ -11,16 +10,16 @@ namespace DoomScroll
     [HarmonyPatch(typeof(HudManager))]
     public static class HudManagerPatch
     {
-        public static event Action cameraToggle;
-        public static event Action capturecSreen;
-       
+        private static DoomScrollEvent Cameratoggle = new DoomScrollEvent();
+        private static DoomScrollEvent CapturecSreen = new DoomScrollEvent();
+
         [HarmonyPostfix]
         [HarmonyPatch("Start")]
         public static void PostfixStart()
         {
             // subscribe methods to call on buttonclick
-            cameraToggle += ScreenshotManager.Instance.OnClickCamera;
-            capturecSreen += ScreenshotManager.Instance.OnClickCaptureScreenshot;
+            Cameratoggle.MyAction += ScreenshotManager.Instance.OnClickCamera;
+            CapturecSreen.MyAction += ScreenshotManager.Instance.OnClickCaptureScreenshot;
         }
 
         [HarmonyPostfix]
@@ -32,11 +31,11 @@ namespace DoomScroll
                 // Invoke methods on mouse click 
                 if (ScreenshotManager.Instance.CameraButton.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
-                    cameraToggle?.Invoke();
+                    Cameratoggle.InvokeAction();
                 }
                 if (ScreenshotManager.Instance.CaptureScreenButton.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
-                    capturecSreen?.Invoke();
+                    CapturecSreen.InvokeAction();
                 }
             }
             catch(Exception e)

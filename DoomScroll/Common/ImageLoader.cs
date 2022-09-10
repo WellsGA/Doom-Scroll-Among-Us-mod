@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using Reactor;
 
-namespace DoomScroll
+namespace DoomScroll.Common
 {
     // Resposible for loading images embedded in current assembly
     public static class ImageLoader
