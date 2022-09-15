@@ -49,14 +49,14 @@ namespace DoomScroll
             if (m_isCameraOpen)
             {
                 m_cameraOverlay.SetActive(false);
-                CaptureScreenButton.ActivateButton(false);
+                CaptureScreenButton.EnableButton(false);
                 m_isCameraOpen = false;
                 hudManagerInsance.SetHudActive(true);
             }
             else 
             {
                 m_cameraOverlay.SetActive(true);
-                CaptureScreenButton.ActivateButton(true);
+                CaptureScreenButton.EnableButton(true);
                 m_isCameraOpen = true;
                 hudManagerInsance.SetHudActive(false);
             }
@@ -71,27 +71,28 @@ namespace DoomScroll
             Vector2 size = hudManagerInsance.MapButton.size * hudManagerInsance.MapButton.transform.localScale;
             Sprite customButtonSprite = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png");
             
-            CameraButton = new CustomButton(m_UIParent, customButtonSprite, position, size);
+            CameraButton = new CustomButton(m_UIParent, customButtonSprite, position, size, "Camera Toggle Button");
         }
 
         private void InitScreenshotOverlay()
         {
             m_cameraOverlay = new GameObject();
             m_cameraOverlay.name = "ScreenshotOverlay";
+            m_cameraOverlay.layer = LayerMask.NameToLayer("UI");
             RectTransform rectTransform = m_cameraOverlay.AddComponent<RectTransform>();
             rectTransform.SetParent(hudManagerInsance.transform);
             rectTransform.transform.localPosition = new Vector3(0f, 0f, -5);
 
             SpriteRenderer sr = m_cameraOverlay.AddComponent<SpriteRenderer>();
-            sr.color = new Color(1f, 1f, 1f, 0.5f); // make it transparent
+            // sr.color = new Color(1f, 1f, 1f, 0.5f); // make it transparent
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraOverlay.png");
             sr.sprite = spr;
 
             // add the capture button
-            Sprite captureSprite = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreen.png");
+            Sprite captureSprite = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreenNew.png");
             Vector3 pos = new Vector3(sr.size.x / 2 - 0.7f, 0, -25);
             
-            CaptureScreenButton = new CustomButton(m_cameraOverlay, captureSprite, pos, new Vector2(0.5f, 0.5f));
+            CaptureScreenButton = new CustomButton(m_cameraOverlay, captureSprite, pos, new Vector2(0.5f, 0.5f), "Screenshot Button");
 
             // deactivate by default
             m_isCameraOpen = false;
@@ -156,7 +157,7 @@ namespace DoomScroll
 
             if (m_screenshots == m_maxPictures)
             {
-                CameraButton.ActivateButton(false);
+                CameraButton.EnableButton(false);
             }
 
         }

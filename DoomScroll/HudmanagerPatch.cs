@@ -44,7 +44,15 @@ namespace DoomScroll
             }
         }
 
-        
+        [HarmonyPostfix]
+        [HarmonyPatch("OpenMeetingRoom")]
+        public static void PostfixOpenMeetingRoom(ChatController __instance)
+        {
+            // FolderManager.Instance.FolderToggleBtn.ButtonGameObject.transform.SetAsFirstSibling();
+           /* int siblingIndex = HudManager.Instance.Chat.gameObject.transform.GetSiblingIndex();
+            FolderManager.Instance.FolderToggleBtn.ButtonGameObject.transform.SetSiblingIndex(siblingIndex+1);
+            Logger<DoomScrollPlugin>.Info("siblingIndex: " + siblingIndex);*/
+        }
 
     }
 }
