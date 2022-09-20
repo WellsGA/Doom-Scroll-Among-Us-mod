@@ -29,7 +29,7 @@
 		<EmbeddedResource Include="Assets\cameraOverlay.png" />
 		<EmbeddedResource Include="Assets\captureScreenNew.png" />
 		<EmbeddedResource Include="Assets\folderToggle.png" />
-		<EmbeddedResource Include="Assets\folderToggleBG.png" />
+		<EmbeddedResource Include="Assets\folderOverlay.png" />
 	</ItemGroup>
     <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" UseSymboliclinksIfPossible="true" />
