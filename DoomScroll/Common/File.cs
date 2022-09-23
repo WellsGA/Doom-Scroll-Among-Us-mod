@@ -25,7 +25,7 @@ namespace DoomScroll.Common
             fileImg = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.file.png");
             fileBtn = new CustomButton(parent, fileImg, parent.transform.position, sr.size / 5, name);
 
-            fileText = new CustomText(name, fileBtn.ButtonGameObject, fileBtn.ButtonGameObject.transform.position, name);
+            fileText = new CustomText(name, fileBtn.ButtonGameObject, name);
         }
         public string GetName()
         {

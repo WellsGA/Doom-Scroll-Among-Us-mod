@@ -63,13 +63,15 @@ namespace DoomScroll
             FolderOverlay = new GameObject();
             FolderOverlay.name = "FolderOverlay";
             FolderOverlay.layer = LayerMask.NameToLayer("UI");
-            RectTransform rectTransform = FolderOverlay.AddComponent<RectTransform>();
-            rectTransform.SetParent(m_UIParent.transform);
-            rectTransform.transform.localPosition = new Vector3(0f, 0f, -10f);
+            FolderOverlay.transform.SetParent(m_UIParent.transform);
+            FolderOverlay.transform.localPosition = new Vector3(0f, 0f, -10f);
+            FolderOverlay.transform.localScale = m_UIParent.transform.localScale * 0.9f;
+
 
             SpriteRenderer sr = FolderOverlay.AddComponent<SpriteRenderer>();
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderOverlay.png");
             sr.sprite = spr;
+
 
             // add back and home buttons TO DO
 
@@ -115,10 +117,10 @@ namespace DoomScroll
             IsFolderOpen = value;
             FolderOverlay.SetActive(value);
         }
-       /* //returns the first item with matching name or null
-        public Folder GetFolderByName(string name, Folder folder) 
+        //returns the first item with matching name or null
+        public Folder GetFolderByName(string name, Folder folder)
         {
-            foreach (IDirectory dir in folder.Content) 
+            foreach (IDirectory dir in folder.Content)
             {
                 if (dir.GetName().Equals(name) && dir.GetType().Equals(folder))
                 {
@@ -126,7 +128,7 @@ namespace DoomScroll
                 }
             }
             return null;
-        }*/
+        }
         public void OnClickFolderBtn()
         {
             if (FolderToggleBtn.IsActive)
