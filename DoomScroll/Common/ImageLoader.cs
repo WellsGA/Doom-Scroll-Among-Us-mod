@@ -15,9 +15,9 @@ namespace DoomScroll.Common
             Texture2D tex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
             try
             {
-                Stream texture = assembly.GetManifestResourceStream(resource);
-                byte[] imageByte = new byte[texture.Length];
-                texture.Read(imageByte, 0, (int)texture.Length);
+                Stream stream = assembly.GetManifestResourceStream(resource);
+                byte[] imageByte = new byte[stream.Length];
+                stream.Read(imageByte, 0, (int)stream.Length);
                 ImageConversion.LoadImage(tex, imageByte, false);
             }
             catch (Exception e)

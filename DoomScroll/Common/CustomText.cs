@@ -23,11 +23,10 @@ namespace DoomScroll.Common
             m_rectTransform.SetParent(parent.transform, true);
 
             SpriteRenderer sr = parent.GetComponent<SpriteRenderer>();
-            //float xOffSet = sr ? sr.size.x /2 : 0;
-            
+            float xOffSet = sr ? sr.size.x /2 + 0.3f : 0;
             float yOffset = sr ? sr.size.y/2 + 0.3f : 0;
             m_rectTransform.transform.position = position;
-            m_rectTransform.transform.localPosition = new Vector3(position.x, position.y - yOffset, position.z);
+            m_rectTransform.transform.localPosition = new Vector3(position.x - xOffSet, position.y - yOffset, position.z);
             
             m_meshRenderer = TextObject.AddComponent<MeshRenderer>();
 
@@ -36,8 +35,9 @@ namespace DoomScroll.Common
             TextMP = TextObject.AddComponent<TextMeshPro>();
             TextMP.text = text;
             TextMP.m_enableWordWrapping = true;
-            TextMP.alignment = TextAlignmentOptions.Center;
-            TextMP.font = Resources.Load("Fonts/ARIAL", Font);
+           // TextMP.alignment = TextAlignmentOptions.Center;
+          
+
             // TextMP.fontSize = 25;
             TextMP.color = Color.black;
   

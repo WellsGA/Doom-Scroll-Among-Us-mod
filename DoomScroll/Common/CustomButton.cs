@@ -69,5 +69,9 @@ namespace DoomScroll.Common
             ButtonGameObject.SetActive(value);   
         }
 
+        public void SetLocalPosition(Vector3 pos) 
+        {
+            m_rectTransform.transform.localPosition = pos;
+        }
     }
 }

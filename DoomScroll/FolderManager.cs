@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using DoomScroll.Common;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,13 +30,18 @@ namespace DoomScroll
         public CustomButton HomeBtn { get; private set; }
         public CustomButton BackBtn { get; private set; }
         
-        private bool isFolderOpen;
-        private GameObject folderOverlay;
+        public bool IsFolderOpen { get; private set; }
+        public GameObject FolderOverlay { get; private set; }
+       // public GameObject FolderOverlayInner { get; private set; }
+
+        private Folder root;
+        private Folder current;
 
         private FolderManager()
         {
             // setting Chat UI as the parent gameobject
             m_UIParent = HudManager.Instance.Chat.OpenKeyboardButton.transform.parent.gameObject;
+            
             CreateFolderBtn();
             CreateFolderOverlay();
             InitFolderStructure();
@@ -57,48 +60,78 @@ namespace DoomScroll
 
         public void CreateFolderOverlay()
         {
-            folderOverlay = new GameObject();
-            folderOverlay.name = "FolderOverlay";
-            folderOverlay.layer = LayerMask.NameToLayer("UI");
-            RectTransform rectTransform = folderOverlay.AddComponent<RectTransform>();
+            FolderOverlay = new GameObject();
+            FolderOverlay.name = "FolderOverlay";
+            FolderOverlay.layer = LayerMask.NameToLayer("UI");
+            RectTransform rectTransform = FolderOverlay.AddComponent<RectTransform>();
             rectTransform.SetParent(m_UIParent.transform);
             rectTransform.transform.localPosition = new Vector3(0f, 0f, -10f);
 
-            SpriteRenderer sr = folderOverlay.AddComponent<SpriteRenderer>();
+            SpriteRenderer sr = FolderOverlay.AddComponent<SpriteRenderer>();
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderOverlay.png");
             sr.sprite = spr;
 
             // add back and home buttons TO DO
 
             // deactivate by default
-            isFolderOpen = false;
-            folderOverlay.SetActive(false);
-            Logger<DoomScrollPlugin>.Info("Folder overlay size " + sr.sprite.rect.size.ToString() );
+            IsFolderOpen = false;
+            FolderOverlay.SetActive(false);
+            Logger<DoomScrollPlugin>.Info("Folder overlay created, size " + sr.size.ToString() );
         }
         private void InitFolderStructure() 
-        {    
+        {
+            SpriteRenderer sr = FolderOverlay.GetComponent<SpriteRenderer>();
+            Sprite folderEmpty = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderEmpty.png");
+            Sprite folder = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folder.png");
+
+            root = new Folder("Home", FolderOverlay, sr, folderEmpty);
+            
+            root.AddItem(new Folder("Images", FolderOverlay, sr, folder));
+            root.AddItem(new Folder("Tasks", FolderOverlay, sr, folderEmpty));
+            root.AddItem(new Folder("Checkpoints", FolderOverlay, sr, folderEmpty));
+            
             Logger<DoomScrollPlugin>.Info("Folder structure initiallized");
         }
+
         private void ToggleFolderOverlay()
         {
-            if (isFolderOpen)
+            if (IsFolderOpen)
             {
-                isFolderOpen = false;
-                folderOverlay.SetActive(false);
+                ActivateFolderOverlay(false);
+                Logger<DoomScrollPlugin>.Info("ROOT FOLDER CLOSED");
             }
             else 
             {
-                isFolderOpen = true;
-                folderOverlay.SetActive(true);
+                ActivateFolderOverlay(true);
+                Logger<DoomScrollPlugin>.Info("ROOT FOLDER OPEN");
+                root.DisplayContent();
+                Logger<DoomScrollPlugin>.Info(root.PrintDirectory());
             }
 
         }
+
+        public void ActivateFolderOverlay(bool value)
+        {
+            IsFolderOpen = value;
+            FolderOverlay.SetActive(value);
+        }
+       /* //returns the first item with matching name or null
+        public Folder GetFolderByName(string name, Folder folder) 
+        {
+            foreach (IDirectory dir in folder.Content) 
+            {
+                if (dir.GetName().Equals(name) && dir.GetType().Equals(folder))
+                {
+                    return (Folder)dir;
+                }
+            }
+            return null;
+        }*/
         public void OnClickFolderBtn()
         {
-            if (FolderToggleBtn.IsEnabled && FolderToggleBtn.IsActive)
+            if (FolderToggleBtn.IsActive)
             {
                 ToggleFolderOverlay();
-                Logger<DoomScrollPlugin>.Info("Folder clicked");
             }
             
         }

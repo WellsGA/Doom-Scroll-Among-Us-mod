@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Reactor;
 using HarmonyLib;
 using UnityEngine;
-using DoomScroll.Common;
 
 namespace DoomScroll
 {
     [HarmonyPatch(typeof(MeetingHud))]
     static class MeetingHudPatch
     {
-
-        private static DoomScrollEvent FolderToggle = new DoomScrollEvent();
+        
         [HarmonyPostfix]
-        [HarmonyPatch("Start")]
-       
+        [HarmonyPatch("Start")]  
         public static void PostfixStart()
         {
-            // subscribe methods to call on buttonclick
-            FolderToggle.MyAction += FolderManager.Instance.OnClickFolderBtn;
             ScreenshotManager.Instance.CameraButton.ActivateButton(false);
         }
 
@@ -42,17 +35,22 @@ namespace DoomScroll
             else if (!HudManager.Instance.Chat.IsOpen && FolderManager.Instance.FolderToggleBtn.IsActive)
             {
                 FolderManager.Instance.FolderToggleBtn.ActivateButton(false);
+                // hide overlay if it was still open
+                if (FolderManager.Instance.IsFolderOpen)
+                {
+                    FolderManager.Instance.ActivateFolderOverlay(false);
+                    Logger<DoomScrollPlugin>.Info("OVERLAY DEACTIVE ");
+                }
                 Logger<DoomScrollPlugin>.Info("INACTIVE ");
             }
             if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.FolderToggleBtn.IsActive)
             {
                 try
-                {
-                   
-                    // Invoke methods on mouse click 
+                {          
+                    // Invoke FolderToggle on mouse click 
                     if (FolderManager.Instance.FolderToggleBtn.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
                     {
-                        FolderToggle.InvokeAction();
+                        HudManagerPatch.FolderToggle.InvokeAction();
                     }
 
                 }

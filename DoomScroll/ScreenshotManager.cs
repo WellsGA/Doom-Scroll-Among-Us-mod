@@ -123,14 +123,15 @@ namespace DoomScroll
                 // RenderTexture.active = null;
                 screenTexture.Release();
                 mainCamrea.targetTexture = null;
-                UnityEngine.Object.Destroy(screenTexture);
+                Object.Destroy(screenTexture);
                 
                 ShowOverlays(true);
 
-                // save the image locally -- for now... this must be changed!
                 byte[] byteArray = screeenShot.EncodeToPNG();
+                // save the image locally -- for testing purposes
                 System.IO.File.WriteAllBytes(Application.dataPath + "/cameracapture_" + m_screenshots + ".png", byteArray);
-                UnityEngine.Object.Destroy(screeenShot);
+                // save the in the inventory folder
+                Object.Destroy(screeenShot);
 
                 m_screenshots++;
                 Logger<DoomScrollPlugin>.Info("number of screenshots: " + m_screenshots);
