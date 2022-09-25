@@ -29,7 +29,7 @@ namespace DoomScroll.Common
 
             folderImg = image;
             folderBtn = new CustomButton(parentUI, folderImg, parentUI.transform.position, sr.size/5 - new Vector2(0.2f, 0.2f), name);
-            new CustomText(name, folderBtn.ButtonGameObject, folderBtn.ButtonGameObject.transform.position, name);
+            new CustomText(name, folderBtn.ButtonGameObject, name);
         }
         
         public void AddItem(IDirectory item)
