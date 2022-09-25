@@ -32,5 +32,18 @@ namespace DoomScroll
                 }
             }
         }
+
+        public static string overallSWCResultsText() // text to put in to TMP object at end, when vicotory/defeat and success/failure for all players is revealed
+        {
+            string overallResults = "";
+            foreach (PlayerSWCTracker swcAndPlayer in playerSWCList)
+            {
+                if (swcAndPlayer.getSWC().getPlayerSWCGoal() != SecondaryWinCondition.Goal.None)
+                {
+                    overallResults += swcAndPlayer.getPlayerName() + " " + swcAndPlayer.getSWC().SWCResultsText() + "\n"; // will add a string in the format of: "PlayerName Goal TargetName: SuccessOrFailure"
+                }
+            }
+            return overallResults;
+        }
     }
 }

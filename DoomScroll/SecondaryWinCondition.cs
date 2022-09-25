@@ -29,6 +29,18 @@ namespace DoomScroll
             return playerSWCTarget;
         }
 
+        public string getTargetName()
+        {
+            foreach (GameData.PlayerInfo playerInfo in GameData.Instance.AllPlayers)
+            {
+                if (playerInfo.PlayerId == playerSWCTarget)
+                {
+                    return playerInfo.PlayerName;
+                }
+            }
+            return "";
+        }
+
         public enum Goal
         {
             Protect,
@@ -119,12 +131,33 @@ namespace DoomScroll
             return false;
         }
 
+        public string SWCAssignText() // text to put into TMP object at beginning, when roles are assigned
+        {
+            if (playerSWCGoal == Goal.Protect)
+            {
+                return "Protect " + getTargetName();
+            }
+            else if (playerSWCGoal == Goal.Frame)
+            {
+                return "Frame " + getTargetName();
+            }
+            return "";
+        }
+
+        public string SWCResultsText() // text to put in to TMP object at end, when vicotory/defeat and success/failure is revealed
+        {
+            if (playerSWCGoal != Goal.None)
+                return SWCAssignText() + ": " + SWCSuccessMessage();
+            else
+                return "";
+        }
+
         public string SWCSuccessMessage()
         {
             bool wasSuccessful = CheckSuccess();
             if (playerSWCGoal == Goal.None)
             {
-                return "N/A";
+                return "";
             }
             else if (wasSuccessful)
             {

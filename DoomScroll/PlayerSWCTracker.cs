@@ -32,5 +32,17 @@ namespace DoomScroll
         {
             return SWC;
         }
+
+        public string getPlayerName()
+        {
+            foreach (GameData.PlayerInfo playerInfo in GameData.Instance.AllPlayers)
+            {
+                if (playerInfo.PlayerId == PlayerID)
+                {
+                    return playerInfo.PlayerName;
+                }
+            }
+            return "";
+        }
     }
 }
