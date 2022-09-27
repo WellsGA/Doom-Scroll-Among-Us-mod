@@ -69,18 +69,10 @@ namespace DoomScroll
             Vector3 mapBtnPos = hudManagerInsance.MapButton.gameObject.transform.position;
             Vector3 position = new Vector3(mapBtnPos.x, mapBtnPos.y - hudManagerInsance.MapButton.size.y * hudManagerInsance.MapButton.transform.localScale.y, mapBtnPos.z);
             Vector2 size = hudManagerInsance.MapButton.size * hudManagerInsance.MapButton.transform.localScale;
-            Texture2D btnTex = ImageLoader.ReadTextureFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png");
-            Sprite cameraBtn = Sprite.Create(
-                btnTex,
-                new Rect(0, 0, btnTex.width, btnTex.height/2),
-                new Vector2(0.5f, 0.5f)
-                );
-            Sprite cameraBtnHover = Sprite.Create(
-                btnTex,
-                new Rect(0, btnTex.height / 2, btnTex.width, btnTex.height),
-                new Vector2(0.5f, 0.5f)
-                );
-            CameraButton = new CustomButton(m_UIParent, cameraBtn, position, size, "Camera Toggle Button");
+            Vector4[] slices = { new Vector4(0, 0, 1, 0.5f), new Vector4(0, 0.5f, 1, 1) };
+            Sprite[] cameraBtnSprites = ImageLoader.ReadSlicedSpriteFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png", slices);
+
+            CameraButton = new CustomButton(m_UIParent, cameraBtnSprites, position, size, "Camera Toggle Button");
         }
 
         private void InitScreenshotOverlay()
@@ -98,7 +90,8 @@ namespace DoomScroll
             sr.sprite = spr;
 
             // add the capture button
-            Sprite captureSprite = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreenNew.png");
+            Vector4[] slices = { new Vector4(0, 0, 1, 0.5f), new Vector4(0, 0.5f, 1, 1) };
+            Sprite[] captureSprite = ImageLoader.ReadSlicedSpriteFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreenNew.png", slices);
             Vector3 pos = new Vector3(sr.size.x / 2 - 0.7f, 0, -25);
             
             CaptureScreenButton = new CustomButton(m_cameraOverlay, captureSprite, pos, new Vector2(0.5f, 0.5f), "Screenshot Button");

@@ -23,15 +23,14 @@ namespace DoomScroll.Common
             this.name = name;
             path = name;
             parentUI = parent;
-
             spriteRndr = sr;
             Content = new List<IDirectory>();
-
             folderImg = image;
-            folderBtn = new CustomButton(parentUI, folderImg, parentUI.transform.position, sr.size/5 - new Vector2(0.2f, 0.2f), name);
+            Sprite[] images = { folderImg };
+            folderBtn = new CustomButton(parentUI, images, parentUI.transform.position, sr.size/5 - new Vector2(0.2f, 0.2f), name);
             new CustomText(name, folderBtn.ButtonGameObject, name);
         }
-        
+
         public void AddItem(IDirectory item)
         {
             Content.Add(item); // new item with initial path

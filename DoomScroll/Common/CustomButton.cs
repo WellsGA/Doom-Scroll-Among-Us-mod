@@ -14,9 +14,9 @@ namespace DoomScroll.Common
         public bool IsActive { get; private set; }
 
         public Sprite BtnImage { get; set; }
-        public Sprite BtnImgageHover { get; set; }
+        public Sprite BtnImageHover { get; set; }
 
-        public CustomButton(GameObject parent, Sprite defaultImg, Vector3 position, Vector2 size, string name)
+        public CustomButton(GameObject parent, Sprite[] images, Vector3 position, Vector2 size, string name)
         {
             ButtonGameObject = new GameObject();
             ButtonGameObject.layer = LayerMask.NameToLayer("UI");
@@ -24,11 +24,16 @@ namespace DoomScroll.Common
             m_rectTransform = ButtonGameObject.AddComponent<RectTransform>();
             m_rectTransform.SetParent(parent.transform, true);
             m_rectTransform.transform.position = position;
-            BtnImage = defaultImg;
+            
+            BtnImage = images[0];
+            BtnImageHover = images.Length > 1 ? BtnImageHover = images[1] : BtnImageHover = images[0];        
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
+            m_spriteRenderer.sprite = BtnImage;
+
             float scale = size.x / m_spriteRenderer.size.x;
             m_spriteRenderer.transform.localScale *= scale;
-
+           
+            
             ActivateButton(true);
             EnableButton(true);
             // debug: Logger<DoomScrollPlugin>.Info(" sprite renderer size: " + m_spriterenderer.size);

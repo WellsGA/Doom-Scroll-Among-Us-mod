@@ -52,20 +52,9 @@ namespace DoomScroll
             SpriteRenderer sr = HudManager.Instance.Chat.OpenKeyboardButton.GetComponent<SpriteRenderer>();
             Vector2 size = sr ? sr.size - new Vector2(0.05f, 0.05f) : new Vector2(0.5f, 0.5f);
             Vector3 position = new(pos.x, pos.y + size.y + 0.1f, pos.z);
-            Texture2D tex = ImageLoader.ReadTextureFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderToggle.png");
-            
-            Sprite defaultBtn = Sprite.Create(
-                tex,
-                new Rect(0, 0, tex.width, tex.height/2),
-                new Vector2(0.5f, 0.5f)
-                );
-            Sprite hoveredtBtn = Sprite.Create(
-                tex,
-                new Rect(0, tex.height / 2, tex.width, tex.height),
-                new Vector2(0.5f, 0.5f)
-                );
-            
-            FolderToggleBtn = new CustomButton(m_UIParent, defaultBtn, position, size, "FolderToggleButton");
+            Vector4[] slices = { new Vector4(0, 0, 1, 0.5f), new Vector4(0, 0.5f, 1, 1) };
+            Sprite[] btnSprites = ImageLoader.ReadSlicedSpriteFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderToggle.png", slices);
+            FolderToggleBtn = new CustomButton(m_UIParent, btnSprites, position, size, "FolderToggleButton");
             FolderToggleBtn.ActivateButton(false);
         }
 
@@ -82,7 +71,6 @@ namespace DoomScroll
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderOverlay.png");
             sr.sprite = spr;
 
-
             // add path, back and home buttons
 
             // deactivate by default
@@ -96,7 +84,8 @@ namespace DoomScroll
             Sprite folder = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folder.png");
 
             root = new Folder("Home", FolderOverlay, sr, folderEmpty);
-            
+            root.GetButton().ActivateButton(false);
+
             root.AddItem(new Folder("Images", FolderOverlay, sr, folder));
             root.AddItem(new Folder("Tasks", FolderOverlay, sr, folderEmpty));
             root.AddItem(new Folder("Checkpoints", FolderOverlay, sr, folderEmpty));

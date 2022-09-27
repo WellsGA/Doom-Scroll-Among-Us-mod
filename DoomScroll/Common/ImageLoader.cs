@@ -20,6 +20,25 @@ namespace DoomScroll.Common
             );
         }
 
+        // image sliced into separate sprites
+        public static Sprite[] ReadSlicedSpriteFromAssembly(Assembly assembly, string resource, Vector4[] slices)
+        {
+            Texture2D tex = ReadTextureFromAssembly(assembly, resource);
+
+            Sprite[] spriteArray = new Sprite[slices.Length];
+            
+            for (int i = 0; i < slices.Length; i++)
+            {
+                spriteArray[i] = Sprite.Create(
+                    tex,
+                    new Rect(tex.width * slices[1].x, tex.height * slices[i].y, tex.width * slices[i].z - tex.width * slices[1].x, tex.height * slices[i].w  - tex.height * slices[i].y),
+                    new Vector2(0.5f, 0.5f), 
+                    1.0f
+                );
+            }
+            return spriteArray;
+        }
+
         // reads the texture from an file, can be sliced into several sprites
         public static Texture2D ReadTextureFromAssembly(Assembly assembly, string resource)
         { 
