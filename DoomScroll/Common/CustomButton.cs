@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Text;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 
 namespace DoomScroll.Common
@@ -20,7 +16,7 @@ namespace DoomScroll.Common
         public Sprite BtnImage { get; set; }
         public Sprite BtnImgageHover { get; set; }
 
-        public CustomButton(GameObject parent, Sprite buttonImg, Vector3 position, Vector2 size, string name)
+        public CustomButton(GameObject parent, Sprite defaultImg, Vector3 position, Vector2 size, string name)
         {
             ButtonGameObject = new GameObject();
             ButtonGameObject.layer = LayerMask.NameToLayer("UI");
@@ -28,16 +24,11 @@ namespace DoomScroll.Common
             m_rectTransform = ButtonGameObject.AddComponent<RectTransform>();
             m_rectTransform.SetParent(parent.transform, true);
             m_rectTransform.transform.position = position;
-
+            BtnImage = defaultImg;
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
-            /*BtnImage = buttonImg;
-            BtnImgageHover = buttonImg; // by default it is the same
-           */
-            m_spriteRenderer.color = Color.white; // default color
-            
             float scale = size.x / m_spriteRenderer.size.x;
             m_spriteRenderer.transform.localScale *= scale;
-           
+
             ActivateButton(true);
             EnableButton(true);
             // debug: Logger<DoomScrollPlugin>.Info(" sprite renderer size: " + m_spriterenderer.size);
@@ -69,8 +60,7 @@ namespace DoomScroll.Common
             else 
             {
                 m_spriteRenderer.color = new Color(1f, 1f, 1f, 0.4f);
-            }
-            
+            }  
         }
 
         public void ActivateButton(bool value)
