@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
+using Reactor;
 
 
 namespace DoomScroll.Common
 {
+    public enum ImageType{
+        DEFAULT,
+        HOVER
+    }
     // Creates and manages custom buttnos
     public class CustomButton
     {
         public GameObject ButtonGameObject { get; private set; }
         private RectTransform m_rectTransform;
-        private SpriteRenderer m_spriteRenderer { get; set; }
-       // public float CoolDown { get; set; }
+        private SpriteRenderer m_spriteRenderer;
+        private Sprite[] buttonIcons;
+        private bool isDefaultImg;
         public bool IsEnabled { get; private set; }
         public bool IsActive { get; private set; }
-
-        public Sprite BtnImage { get; set; }
-        public Sprite BtnImageHover { get; set; }
+       
 
         public CustomButton(GameObject parent, Sprite[] images, Vector3 position, Vector2 size, string name)
         {
@@ -25,15 +29,15 @@ namespace DoomScroll.Common
             m_rectTransform.SetParent(parent.transform, true);
             m_rectTransform.transform.position = position;
             
-            BtnImage = images[0];
-            BtnImageHover = images.Length > 1 ? BtnImageHover = images[1] : BtnImageHover = images[0];        
+            buttonIcons = images;
+            Logger<DoomScrollPlugin>.Info("BUTTON 0: " + buttonIcons[0].rect);
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
-            m_spriteRenderer.sprite = BtnImage;
-
+           
+            SetButtonImg(ImageType.DEFAULT);
+            // size has to be set after setting the image!
             float scale = size.x / m_spriteRenderer.size.x;
             m_spriteRenderer.transform.localScale *= scale;
-           
-            
+
             ActivateButton(true);
             EnableButton(true);
             // debug: Logger<DoomScrollPlugin>.Info(" sprite renderer size: " + m_spriterenderer.size);
@@ -51,9 +55,36 @@ namespace DoomScroll.Common
             return isInBoundsX && isInBoundsY && IsEnabled && IsActive;
         }
 
-        public void SetButtonImg(Sprite sprite) 
+        public void SetButtonImg(ImageType type)
         {
-            m_spriteRenderer.sprite = sprite;
+            switch (type) {
+                case ImageType.DEFAULT:
+                    m_spriteRenderer.sprite = buttonIcons[0];
+                    isDefaultImg = true;
+                    break;
+                case ImageType.HOVER:
+                    m_spriteRenderer.sprite = buttonIcons.Length > 1 ? buttonIcons[1] : buttonIcons[0];
+                    isDefaultImg = false;
+                    break;
+                default:
+                    m_spriteRenderer.sprite = buttonIcons[0];
+                    isDefaultImg = true;
+                    break;
+            }              
+        }
+
+        public void ReplaceImgageOnHover() 
+        {
+            if (isDefaultImg && isHovered())
+            {
+                SetButtonImg(ImageType.HOVER);
+                Logger<DoomScrollPlugin>.Info("BUTTON HOVER");
+            }
+            else if (!isDefaultImg && !isHovered())
+            {
+                SetButtonImg(ImageType.DEFAULT);
+                Logger<DoomScrollPlugin>.Info("BUTTON NOT HOVER");
+            }
         }
         public void EnableButton(bool value)
         {

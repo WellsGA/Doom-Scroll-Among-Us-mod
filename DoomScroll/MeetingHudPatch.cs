@@ -28,6 +28,10 @@ namespace DoomScroll
         [HarmonyPatch("Update")]
         public static void PostfixUpdate()
         {
+            // Change button icon on hover
+            FolderManager.Instance.FolderToggleBtn.ReplaceImgageOnHover();
+
+            // Activate FolderToggle Button if Chat is open and hide if it's closed
             if (HudManager.Instance.Chat.IsOpen && !FolderManager.Instance.FolderToggleBtn.IsActive)
             {
                 FolderManager.Instance.FolderToggleBtn.ActivateButton(true);
@@ -36,15 +40,13 @@ namespace DoomScroll
             else if (!HudManager.Instance.Chat.IsOpen && FolderManager.Instance.FolderToggleBtn.IsActive)
             {
                 FolderManager.Instance.FolderToggleBtn.ActivateButton(false);
-                // hide overlay if it was still open
+                // hide overlay too if it was still open
                 if (FolderManager.Instance.IsFolderOpen)
                 {
                     FolderManager.Instance.ActivateFolderOverlay(false);
-                    Logger<DoomScrollPlugin>.Info("OVERLAY DEACTIVE ");
                 }
                 Logger<DoomScrollPlugin>.Info("INACTIVE ");
             }
-
 
             if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.FolderToggleBtn.IsActive)
             {
@@ -63,6 +65,7 @@ namespace DoomScroll
                 }
             }
 
+            // Check if any of the displayed folders are clicked (probably could be handled with events...)
             if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.IsFolderOpen)
             {
                 try

@@ -52,14 +52,15 @@ namespace DoomScroll
             SpriteRenderer sr = HudManager.Instance.Chat.OpenKeyboardButton.GetComponent<SpriteRenderer>();
             Vector2 size = sr ? sr.size - new Vector2(0.05f, 0.05f) : new Vector2(0.5f, 0.5f);
             Vector3 position = new(pos.x, pos.y + size.y + 0.1f, pos.z);
-            Vector4[] slices = { new Vector4(0, 0, 1, 0.5f), new Vector4(0, 0.5f, 1, 1) };
-            Sprite[] btnSprites = ImageLoader.ReadSlicedSpriteFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderToggle.png", slices);
+            Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
+            Sprite[] btnSprites = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderToggle.png", slices);
             FolderToggleBtn = new CustomButton(m_UIParent, btnSprites, position, size, "FolderToggleButton");
             FolderToggleBtn.ActivateButton(false);
         }
 
         public void CreateFolderOverlay()
         {
+            // create the overlay background
             FolderOverlay = new GameObject();
             FolderOverlay.name = "FolderOverlay";
             FolderOverlay.layer = LayerMask.NameToLayer("UI");
@@ -71,7 +72,9 @@ namespace DoomScroll
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderOverlay.png");
             sr.sprite = spr;
 
-            // add path, back and home buttons
+            // add back button, home buttons, and path
+
+
 
             // deactivate by default
             IsFolderOpen = false;

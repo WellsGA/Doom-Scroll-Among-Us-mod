@@ -21,7 +21,8 @@ namespace DoomScroll.Common
         }
 
         // image sliced into separate sprites
-        public static Sprite[] ReadSlicedSpriteFromAssembly(Assembly assembly, string resource, Vector4[] slices)
+        // sprite rect is left to right and bottom to top!!! 
+        public static Sprite[] ReadImageSlicesFromAssembly(Assembly assembly, string resource, Vector4[] slices)
         {
             Texture2D tex = ReadTextureFromAssembly(assembly, resource);
 
@@ -31,7 +32,7 @@ namespace DoomScroll.Common
             {
                 spriteArray[i] = Sprite.Create(
                     tex,
-                    new Rect(tex.width * slices[1].x, tex.height * slices[i].y, tex.width * slices[i].z - tex.width * slices[1].x, tex.height * slices[i].w  - tex.height * slices[i].y),
+                    new Rect(tex.width * slices[i].x, tex.height * slices[i].y, tex.width * slices[i].z - tex.width * slices[i].x, tex.height * slices[i].w  - tex.height * slices[i].y),
                     new Vector2(0.5f, 0.5f), 
                     1.0f
                 );

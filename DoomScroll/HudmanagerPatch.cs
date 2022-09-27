@@ -28,13 +28,17 @@ namespace DoomScroll
         [HarmonyPatch("Update")]
         public static void PostfixUpdate()
         {
+            // Replace sprite on mouse hover for both buttons
+            ScreenshotManager.Instance.CameraButton.ReplaceImgageOnHover();
+            ScreenshotManager.Instance.CaptureScreenButton.ReplaceImgageOnHover();
             try
             {
-                // Invoke methods on mouse click 
+                // Invoke methods on mouse click - open camera overlay
                 if (ScreenshotManager.Instance.CameraButton.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
                     Cameratoggle.InvokeAction();
                 }
+                // Invoke methods on mouse click - capture screen
                 if (ScreenshotManager.Instance.CaptureScreenButton.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
                     CapturecSreen.InvokeAction();

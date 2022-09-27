@@ -69,8 +69,8 @@ namespace DoomScroll
             Vector3 mapBtnPos = hudManagerInsance.MapButton.gameObject.transform.position;
             Vector3 position = new Vector3(mapBtnPos.x, mapBtnPos.y - hudManagerInsance.MapButton.size.y * hudManagerInsance.MapButton.transform.localScale.y, mapBtnPos.z);
             Vector2 size = hudManagerInsance.MapButton.size * hudManagerInsance.MapButton.transform.localScale;
-            Vector4[] slices = { new Vector4(0, 0, 1, 0.5f), new Vector4(0, 0.5f, 1, 1) };
-            Sprite[] cameraBtnSprites = ImageLoader.ReadSlicedSpriteFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png", slices);
+            Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
+            Sprite[] cameraBtnSprites = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png", slices);
 
             CameraButton = new CustomButton(m_UIParent, cameraBtnSprites, position, size, "Camera Toggle Button");
         }
@@ -90,8 +90,8 @@ namespace DoomScroll
             sr.sprite = spr;
 
             // add the capture button
-            Vector4[] slices = { new Vector4(0, 0, 1, 0.5f), new Vector4(0, 0.5f, 1, 1) };
-            Sprite[] captureSprite = ImageLoader.ReadSlicedSpriteFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreenNew.png", slices);
+            Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
+            Sprite[] captureSprite = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreenNew.png", slices);
             Vector3 pos = new Vector3(sr.size.x / 2 - 0.7f, 0, -25);
             
             CaptureScreenButton = new CustomButton(m_cameraOverlay, captureSprite, pos, new Vector2(0.5f, 0.5f), "Screenshot Button");
@@ -100,7 +100,6 @@ namespace DoomScroll
             m_isCameraOpen = false;
             m_cameraOverlay.SetActive(false);
         }
-
 
         private void CaptureScreenshot()
         {  
