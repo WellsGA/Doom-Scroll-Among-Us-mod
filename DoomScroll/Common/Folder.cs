@@ -61,7 +61,7 @@ namespace DoomScroll.Common
         }
         public void DisplayContent() 
         {
-            folderBtn.ActivateButton(false);
+ 
             Vector3 pos = new Vector3(0f, 0f, -20f);
             float width = spriteRndr.size.x;
             float height = spriteRndr.size.y;
@@ -81,7 +81,13 @@ namespace DoomScroll.Common
                 }
             }
         }
-
+        public void HideContent() 
+        {
+            foreach (IDirectory dir in Content) 
+            {
+                dir.GetButton().ActivateButton(false);
+            }
+        }
         public string PrintDirectory()
         {
             string items = "";
@@ -90,6 +96,11 @@ namespace DoomScroll.Common
                 items += dir.PrintDirectory();
             }
             return path + "[ " + items + " ]";
+        }
+
+        public void OnClickFolder() 
+        {
+
         }
     }
 }

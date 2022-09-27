@@ -2,6 +2,7 @@
 using Reactor;
 using HarmonyLib;
 using UnityEngine;
+using DoomScroll.Common;
 
 namespace DoomScroll
 {
@@ -43,16 +44,39 @@ namespace DoomScroll
                 }
                 Logger<DoomScrollPlugin>.Info("INACTIVE ");
             }
+
+
             if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.FolderToggleBtn.IsActive)
             {
                 try
                 {          
                     // Invoke FolderToggle on mouse click 
-                    if (FolderManager.Instance.FolderToggleBtn.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
+                    if (FolderManager.Instance.FolderToggleBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         HudManagerPatch.FolderToggle.InvokeAction();
                     }
 
+                }
+                catch (Exception e)
+                {
+                    Logger<DoomScrollPlugin>.Error("Error invoking method: " + e);
+                }
+            }
+
+            if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.IsFolderOpen)
+            {
+                try
+                {
+                    foreach (IDirectory dir in FolderManager.Instance.Current.Content)
+                    {
+                        if (dir.GetButton().isHovered() && Input.GetKey(KeyCode.Mouse0)) 
+                        {
+                            if (dir is Folder folder) 
+                            {
+                                FolderManager.Instance.ChangeDirectory(folder);
+                            }
+                        }
+                    }
                 }
                 catch (Exception e)
                 {

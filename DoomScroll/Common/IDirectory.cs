@@ -12,6 +12,7 @@ namespace DoomScroll.Common
         public CustomButton GetButton();
         public void DisplayContent();
 
+        public void HideContent();
         public string PrintDirectory();
     }
 }

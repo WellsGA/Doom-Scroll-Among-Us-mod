@@ -17,6 +17,9 @@ namespace DoomScroll.Common
         public bool IsEnabled { get; private set; }
         public bool IsActive { get; private set; }
 
+        public Sprite BtnImage { get; set; }
+        public Sprite BtnImgageHover { get; set; }
+
         public CustomButton(GameObject parent, Sprite buttonImg, Vector3 position, Vector2 size, string name)
         {
             ButtonGameObject = new GameObject();
@@ -27,7 +30,10 @@ namespace DoomScroll.Common
             m_rectTransform.transform.position = position;
 
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
-            m_spriteRenderer.sprite = buttonImg;
+            /*BtnImage = buttonImg;
+            BtnImgageHover = buttonImg; // by default it is the same
+           */
+            m_spriteRenderer.color = Color.white; // default color
             
             float scale = size.x / m_spriteRenderer.size.x;
             m_spriteRenderer.transform.localScale *= scale;
@@ -37,7 +43,7 @@ namespace DoomScroll.Common
             // debug: Logger<DoomScrollPlugin>.Info(" sprite renderer size: " + m_spriterenderer.size);
         }
 
-        public bool IsClicked()
+        public bool isHovered()
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 btnPos = m_spriteRenderer.transform.position;
@@ -49,6 +55,10 @@ namespace DoomScroll.Common
             return isInBoundsX && isInBoundsY && IsEnabled && IsActive;
         }
 
+        public void SetButtonImg(Sprite sprite) 
+        {
+            m_spriteRenderer.sprite = sprite;
+        }
         public void EnableButton(bool value)
         {
             IsEnabled = value;

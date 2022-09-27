@@ -31,11 +31,11 @@ namespace DoomScroll
             try
             {
                 // Invoke methods on mouse click 
-                if (ScreenshotManager.Instance.CameraButton.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
+                if (ScreenshotManager.Instance.CameraButton.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
                     Cameratoggle.InvokeAction();
                 }
-                if (ScreenshotManager.Instance.CaptureScreenButton.IsClicked() && Input.GetKeyUp(KeyCode.Mouse0))
+                if (ScreenshotManager.Instance.CaptureScreenButton.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
                     CapturecSreen.InvokeAction();
                 }
@@ -44,16 +44,13 @@ namespace DoomScroll
             {
                 Logger<DoomScrollPlugin>.Error("Error invoking method: " + e);
             }
+
         }
 
         [HarmonyPostfix]
         [HarmonyPatch("OpenMeetingRoom")]
         public static void PostfixOpenMeetingRoom(ChatController __instance)
         {
-            // FolderManager.Instance.FolderToggleBtn.ButtonGameObject.transform.SetAsFirstSibling();
-           /* int siblingIndex = HudManager.Instance.Chat.gameObject.transform.GetSiblingIndex();
-            FolderManager.Instance.FolderToggleBtn.ButtonGameObject.transform.SetSiblingIndex(siblingIndex+1);
-            Logger<DoomScrollPlugin>.Info("siblingIndex: " + siblingIndex);*/
         }
 
     }

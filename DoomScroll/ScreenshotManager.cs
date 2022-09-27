@@ -69,9 +69,18 @@ namespace DoomScroll
             Vector3 mapBtnPos = hudManagerInsance.MapButton.gameObject.transform.position;
             Vector3 position = new Vector3(mapBtnPos.x, mapBtnPos.y - hudManagerInsance.MapButton.size.y * hudManagerInsance.MapButton.transform.localScale.y, mapBtnPos.z);
             Vector2 size = hudManagerInsance.MapButton.size * hudManagerInsance.MapButton.transform.localScale;
-            Sprite customButtonSprite = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png");
-            
-            CameraButton = new CustomButton(m_UIParent, customButtonSprite, position, size, "Camera Toggle Button");
+            Texture2D btnTex = ImageLoader.ReadTextureFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png");
+            Sprite cameraBtn = Sprite.Create(
+                btnTex,
+                new Rect(0, 0, btnTex.width, btnTex.height/2),
+                new Vector2(0.5f, 0.5f)
+                );
+            Sprite cameraBtnHover = Sprite.Create(
+                btnTex,
+                new Rect(0, btnTex.height / 2, btnTex.width, btnTex.height),
+                new Vector2(0.5f, 0.5f)
+                );
+            CameraButton = new CustomButton(m_UIParent, cameraBtn, position, size, "Camera Toggle Button");
         }
 
         private void InitScreenshotOverlay()

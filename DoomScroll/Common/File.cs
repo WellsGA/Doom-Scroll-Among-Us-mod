@@ -46,6 +46,10 @@ namespace DoomScroll.Common
             
         }
 
+        public void HideContent()
+        {
+            // hide the content -- close the overlay
+        }
         public string PrintDirectory()
         {
             return " " + path + " [file]";
