@@ -9,7 +9,6 @@ namespace DoomScroll
     // basic singleton pattern - not thread safe
     public sealed class ScreenshotManager
     {
-
         private static ScreenshotManager _instance;
         public static ScreenshotManager Instance 
         {

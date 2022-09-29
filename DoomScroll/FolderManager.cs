@@ -50,7 +50,7 @@ namespace DoomScroll
         {  
             Vector3 pos = HudManager.Instance.Chat.OpenKeyboardButton.transform.localPosition;
             SpriteRenderer sr = HudManager.Instance.Chat.OpenKeyboardButton.GetComponent<SpriteRenderer>();
-            Vector2 size = sr ? sr.size - new Vector2(0.05f, 0.05f) : new Vector2(0.5f, 0.5f);
+            Vector2 size = sr ? sr.size : new Vector2(0.5f, 0.5f);
             Vector3 position = new(pos.x, pos.y + size.y + 0.1f, pos.z);
             Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
             Sprite[] btnSprites = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderToggle.png", slices);
@@ -72,8 +72,12 @@ namespace DoomScroll
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderOverlay.png");
             sr.sprite = spr;
 
-            // add back button, home buttons, and path
-
+            // add close button, back button, home buttons, and path
+            SpriteRenderer sr2 = HudManager.Instance.MapButton;
+            Vector2 size = sr2 ? sr2.size : new Vector2(0.5f, 0.5f);
+            Vector3 position = new Vector3(-sr.size.x/2 - size.x /2 , sr.size.y/2, -5f);
+            Sprite[] closeBtn = { ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.closeButton.png") };
+            CloseBtn = new CustomButton(FolderOverlay, closeBtn, position, size, "Close FolderOverlay");
 
 
             // deactivate by default

@@ -30,7 +30,7 @@ namespace DoomScroll.Common
             m_rectTransform.transform.localPosition = position;
             
             buttonIcons = images;
-            Logger<DoomScrollPlugin>.Info("BUTTON 0: " + buttonIcons[0].rect);
+            // debug:// Logger<DoomScrollPlugin>.Info("BUTTON 0: " + buttonIcons[0].rect);
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
            
             SetButtonImg(ImageType.DEFAULT);

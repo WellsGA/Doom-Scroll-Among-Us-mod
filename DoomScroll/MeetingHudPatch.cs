@@ -53,7 +53,7 @@ namespace DoomScroll
                 try
                 {          
                     // Invoke FolderToggle on mouse click 
-                    if (FolderManager.Instance.FolderToggleBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
+                    if ( FolderManager.Instance.FolderToggleBtn.isHovered()  && Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         HudManagerPatch.FolderToggle.InvokeAction();
                     }
@@ -70,6 +70,10 @@ namespace DoomScroll
             {
                 try
                 {
+                    if ( FolderManager.Instance.CloseBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
+                    {
+                        HudManagerPatch.FolderToggle.InvokeAction();
+                    }
                     foreach (IDirectory dir in FolderManager.Instance.Current.Content)
                     {
                         if (dir.GetButton().isHovered() && Input.GetKey(KeyCode.Mouse0)) 
