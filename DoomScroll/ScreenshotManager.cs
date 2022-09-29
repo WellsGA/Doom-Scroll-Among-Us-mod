@@ -92,7 +92,7 @@ namespace DoomScroll
             // add the capture button
             Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
             Sprite[] captureSprite = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreenNew.png", slices);
-            Vector3 pos = new Vector3(sr.size.x / 2 - 0.7f, 0, -25);
+            Vector3 pos = new Vector3(sr.size.x / 2 - 0.7f, 0, -10);
             
             CaptureScreenButton = new CustomButton(m_cameraOverlay, captureSprite, pos, new Vector2(0.5f, 0.5f), "Screenshot Button");
 

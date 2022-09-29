@@ -18,6 +18,7 @@ namespace DoomScroll.Common
         private Sprite folderImg;
         private GameObject parentUI;
         private SpriteRenderer spriteRndr;
+        private CustomText Foldername; 
         public Folder(string name, GameObject parent, SpriteRenderer sr, Sprite image)
         {
             this.name = name;
@@ -28,7 +29,7 @@ namespace DoomScroll.Common
             folderImg = image;
             Sprite[] images = { folderImg };
             folderBtn = new CustomButton(parentUI, images, parentUI.transform.position, sr.size/5 - new Vector2(0.2f, 0.2f), name);
-            new CustomText(name, folderBtn.ButtonGameObject, name);
+            Foldername = new CustomText(name, folderBtn.ButtonGameObject, name);
         }
 
         public void AddItem(IDirectory item)

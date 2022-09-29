@@ -27,7 +27,7 @@ namespace DoomScroll.Common
             ButtonGameObject.name = name;
             m_rectTransform = ButtonGameObject.AddComponent<RectTransform>();
             m_rectTransform.SetParent(parent.transform, true);
-            m_rectTransform.transform.position = position;
+            m_rectTransform.transform.localPosition = position;
             
             buttonIcons = images;
             Logger<DoomScrollPlugin>.Info("BUTTON 0: " + buttonIcons[0].rect);

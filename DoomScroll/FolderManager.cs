@@ -48,7 +48,7 @@ namespace DoomScroll
         }
         private void CreateFolderBtn() 
         {  
-            Vector3 pos = HudManager.Instance.Chat.OpenKeyboardButton.transform.position;
+            Vector3 pos = HudManager.Instance.Chat.OpenKeyboardButton.transform.localPosition;
             SpriteRenderer sr = HudManager.Instance.Chat.OpenKeyboardButton.GetComponent<SpriteRenderer>();
             Vector2 size = sr ? sr.size - new Vector2(0.05f, 0.05f) : new Vector2(0.5f, 0.5f);
             Vector3 position = new(pos.x, pos.y + size.y + 0.1f, pos.z);
