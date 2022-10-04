@@ -68,12 +68,12 @@ namespace DoomScroll.Common
             {
                 for(int j = 0; j < 5; j++)
                 {
-                    if(i+j < Content.Count)
+                    if(j+i*5 < Content.Count)
                     {
-                        pos.x = i * width / 5 - width/2 + 0.7f;
-                        pos.y = j * height / 5 + height/2 - 0.7f;
-                        Content[j+i].GetButton().SetLocalPosition(pos);
-                        Content[j+i].GetButton().ActivateButton(true);
+                        pos.x = j * width / 5 - width/2 + 0.7f;
+                        pos.y = i * -height / 5 + height/2 - 0.7f;
+                        Content[j+i*5].GetButton().SetLocalPosition(pos);
+                        Content[j+i*5].GetButton().ActivateButton(true);
                     }
                 }
             }
