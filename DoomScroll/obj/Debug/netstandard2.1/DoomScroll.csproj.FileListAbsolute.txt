@@ -22,3 +22,11 @@ C:\Users\Esports Research Lab\Desktop\Among Us Mod\Doom-Scroll-Among-Us-mod\Doom
 C:\Users\Esports Research Lab\Desktop\Among Us Mod\Doom-Scroll-Among-Us-mod\DoomScroll\obj\Debug\netstandard2.1\DoomScroll.dll
 C:\Users\Esports Research Lab\Desktop\Among Us Mod\Doom-Scroll-Among-Us-mod\DoomScroll\bin\Debug\netstandard2.1\DoomScroll.deps.json
 C:\Users\Esports Research Lab\Desktop\Among Us Mod\Doom-Scroll-Among-Us-mod\DoomScroll\bin\Debug\netstandard2.1\DoomScroll.dll
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\bin\Debug\netstandard2.1\DoomScroll.deps.json
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\bin\Debug\netstandard2.1\DoomScroll.dll
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\obj\Debug\netstandard2.1\DoomScroll.csproj.AssemblyReference.cache
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\obj\Debug\netstandard2.1\DoomScroll.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\obj\Debug\netstandard2.1\DoomScroll.AssemblyInfoInputs.cache
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\obj\Debug\netstandard2.1\DoomScroll.AssemblyInfo.cs
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\obj\Debug\netstandard2.1\DoomScroll.csproj.CoreCompileInputs.cache
+C:\Users\alain\Documents\GitHub\Doom-Scroll---Among-Us-mod\DoomScroll\obj\Debug\netstandard2.1\DoomScroll.dll

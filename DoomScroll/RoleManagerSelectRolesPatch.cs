@@ -7,9 +7,10 @@ using DoomScroll.Common;
 
 namespace DoomScroll
 {
-    [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
+    [HarmonyPatch(typeof(RoleManager))]
     public static class RoleManagerSelectRolesPatch
     {
+        [HarmonyPatch("SelectRoles")]
         public static void Postfix(RoleManager __instance)
         {
             Logger<DoomScrollPlugin>.Info("Select Roles Patch is running!!\n There should be Secondary Win Conditions below:\n");
