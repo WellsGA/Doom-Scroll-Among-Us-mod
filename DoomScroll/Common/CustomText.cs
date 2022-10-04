@@ -6,39 +6,71 @@ using TMPro;
 
 namespace DoomScroll.Common
 {
+    public enum TextPosition 
+    {
+        BELOWPARENT,
+        ABOVEPARENT,
+        MIDDLE,
+        LEFTTOPARENT,
+        RIGHTTOPARENT
+    }
     public class CustomText
     {
         public GameObject TextObject { get; }
         public TextMeshPro TextMP { get; }
         private MeshRenderer m_meshRenderer;
+        private GameObject parent;
+        private Vector2 parentSize;
+        
+       
 
         public CustomText(string name, GameObject parent, string text) 
         {
             TextObject = new GameObject();
             TextObject.layer = LayerMask.NameToLayer("UI");
             TextObject.name = name;
-            TextObject.transform.SetParent(parent.transform, true);
+            this.parent = parent;
+            TextObject.transform.SetParent(this.parent.transform, true);
 
             SpriteRenderer sr = parent.GetComponent<SpriteRenderer>();
-            Vector3 position = parent.transform.localPosition;
-            float yOffset = sr ? sr.size.y/2 + 0.1f : 0;
-            TextObject.transform.position = position;
-            TextObject.transform.localPosition = new Vector3(position.x, position.y - yOffset, position.z);
-            
-            m_meshRenderer = TextObject.AddComponent<MeshRenderer>();
+            parentSize = sr ? sr.size / 2 : new Vector2(0.5f, 0.5f);
 
+            // sets the defaul position under the parent object
+            SetPosition(TextPosition.BELOWPARENT);
+            m_meshRenderer = TextObject.AddComponent<MeshRenderer>();
             m_meshRenderer.transform.localScale = parent.transform.localScale;
 
             TextMP = TextObject.AddComponent<TextMeshPro>();
             TextMP.text = text;
             TextMP.m_enableWordWrapping = true;
             TextMP.alignment = TextAlignmentOptions.Center;
-
-            // TextMP.fontSize = 25;
             TextMP.color = Color.black;
-  
-            // TextMP.outlineColor = Color.black;
-            //TextMP.SetOutlineThickness(0.1f);
+        }
+
+        public void SetPosition(TextPosition pos) 
+        {
+            Vector3 position = parent.transform.localPosition;
+            switch (pos) 
+            {
+                case TextPosition.BELOWPARENT:
+                    TextObject.transform.localPosition = new Vector3(position.x, position.y - parentSize.y + 0.1f, position.z);
+                    return;    
+                case TextPosition.ABOVEPARENT:
+                    TextObject.transform.localPosition = new Vector3(position.x, position.y + parentSize.y + 0.1f, position.z);
+                    return;
+                case TextPosition.LEFTTOPARENT:
+                    TextObject.transform.localPosition = new Vector3(position.x - parentSize.y + 0.1f, position.y, position.z);
+                    return;
+                case TextPosition.RIGHTTOPARENT:
+                    TextObject.transform.localPosition = new Vector3(position.x + parentSize.y + 0.1f, position.y, position.z);
+                    return;
+                case TextPosition.MIDDLE:
+                default:
+                    TextObject.transform.localPosition = position;
+                    return;
+            }
+                
+
         }
     }
 }

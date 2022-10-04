@@ -13,29 +13,23 @@ namespace DoomScroll.Common
 
         private string name;
         private string path;
-
-        private Sprite fileImg;
         private CustomButton fileBtn;
-        private CustomText fileText;
-        public File(string name, GameObject parent, SpriteRenderer sr)
+
+        public File(string parentPath, string name, GameObject parent, SpriteRenderer sr)
         {
             this.name = name;
-            path = name;
-           
-            fileImg = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.file.png");
-            Sprite[] images = { fileImg };
+            path = parentPath + "/" + name;
+            Sprite[] images = { ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.file.png") };
             fileBtn = new CustomButton(parent, images, parent.transform.position, sr.size / 5, name);
-
-            fileText = new CustomText(name, fileBtn.ButtonGameObject, name);
+            new CustomText(name, fileBtn.ButtonGameObject, name);
         }
         public string GetName()
         {
             return name;
         }
-
-        public void SetPath(string path)
+        public string GetPath()
         {
-            this.path = path + "/" + name;
+            return name;
         }
         public CustomButton GetButton() 
         {
@@ -43,8 +37,7 @@ namespace DoomScroll.Common
         }
         public void DisplayContent() 
         {
-            // display the content of the file
-            
+            // display the content of the file 
         }
 
         public void HideContent()

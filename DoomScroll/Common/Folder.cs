@@ -10,32 +10,29 @@ namespace DoomScroll.Common
     public class Folder : IDirectory
     {    
         public List<IDirectory> Content { get; private set; }
-       
+        public Folder ParentFolder { get; }
+        
         private string name;
         private string path;
         private CustomButton folderBtn;
 
-        private Sprite folderImg;
         private GameObject parentUI;
         private SpriteRenderer spriteRndr;
-        private CustomText Foldername; 
-        public Folder(string name, GameObject parent, SpriteRenderer sr, Sprite image)
+        public Folder(string parentPath, string name, GameObject parent, SpriteRenderer sr, Sprite folderImg)
         {
             this.name = name;
-            path = name;
+            path = parentPath + "/" + name;
             parentUI = parent;
             spriteRndr = sr;
             Content = new List<IDirectory>();
-            folderImg = image;
             Sprite[] images = { folderImg };
-            folderBtn = new CustomButton(parentUI, images, parentUI.transform.position, sr.size/5 - new Vector2(0.2f, 0.2f), name);
-            Foldername = new CustomText(name, folderBtn.ButtonGameObject, name);
+            folderBtn = new CustomButton(parentUI, images, parentUI.transform.position, sr.size/5 - new Vector2(0.2f, 0.2f), name);  
+            new CustomText(name, folderBtn.ButtonGameObject, name);
         }
 
         public void AddItem(IDirectory item)
         {
-            Content.Add(item); // new item with initial path
-            SetChildPath(path, item); // set correct path
+            Content.Add(item);
         }
 
         public void RemoveItem(IDirectory item)
@@ -48,17 +45,16 @@ namespace DoomScroll.Common
             return name;
         }
 
+        public string GetPath()
+        {
+            return path;
+        }
+
         public CustomButton GetButton()
         {
             return folderBtn;
         }
-        private void SetChildPath(string path, IDirectory item)
-        {
-            item.SetPath(path);
-        }
-        public void SetPath(string path) {
-            this.path = path + "/" + name;
-        }
+      
         public void DisplayContent() 
         {
  
@@ -98,9 +94,5 @@ namespace DoomScroll.Common
             return path + "[ " + items + " ]";
         }
 
-        public void OnClickFolder() 
-        {
-
-        }
     }
 }

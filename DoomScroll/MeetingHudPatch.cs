@@ -9,7 +9,6 @@ namespace DoomScroll
     [HarmonyPatch(typeof(MeetingHud))]
     static class MeetingHudPatch
     {
-        
         [HarmonyPostfix]
         [HarmonyPatch("Start")]  
         public static void PostfixStart()
@@ -28,8 +27,10 @@ namespace DoomScroll
         [HarmonyPatch("Update")]
         public static void PostfixUpdate()
         {
+
             // Change button icon on hover
             FolderManager.Instance.FolderToggleBtn.ReplaceImgageOnHover();
+            
 
             // Activate FolderToggle Button if Chat is open and hide if it's closed
             if (HudManager.Instance.Chat.IsOpen && !FolderManager.Instance.FolderToggleBtn.IsActive)
@@ -53,7 +54,7 @@ namespace DoomScroll
                 try
                 {          
                     // Invoke FolderToggle on mouse click 
-                    if ( FolderManager.Instance.FolderToggleBtn.isHovered()  && Input.GetKeyUp(KeyCode.Mouse0))
+                    if (FolderManager.Instance.FolderToggleBtn.isHovered()  && Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         HudManagerPatch.FolderToggle.InvokeAction();
                     }
@@ -65,15 +66,25 @@ namespace DoomScroll
                 }
             }
 
-            // Check if any of the displayed folders are clicked (probably could be handled with events...)
+            // Check if any of the displayed folders are clicked (could be handled with events...)
             if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.IsFolderOpen)
             {
+               /* FolderManager.Instance.HomeBtn.ReplaceImgageOnHover();
+                FolderManager.Instance.BackBtn.ReplaceImgageOnHover();*/
                 try
                 {
                     if ( FolderManager.Instance.CloseBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         HudManagerPatch.FolderToggle.InvokeAction();
                     }
+                   /* if (FolderManager.Instance.BackBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
+                    {
+                        FolderManager.Instance.OnClickBackButton();
+                    }
+                    if (FolderManager.Instance.HomeBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
+                    {
+                        FolderManager.Instance.OnClickHomeButton();
+                    }*/
                     foreach (IDirectory dir in FolderManager.Instance.Current.Content)
                     {
                         if (dir.GetButton().isHovered() && Input.GetKey(KeyCode.Mouse0)) 

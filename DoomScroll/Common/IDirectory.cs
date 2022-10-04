@@ -8,7 +8,7 @@ namespace DoomScroll.Common
    public interface IDirectory
     {
         public string GetName();
-        public void SetPath(string path);
+        public string GetPath();
         public CustomButton GetButton();
         public void DisplayContent();
 
