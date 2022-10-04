@@ -2848,14 +2848,14 @@
   "project": {
     "version": "1.0.0-dev",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Esports Research Lab\\Desktop\\GitAmongUsMod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
+      "projectUniqueName": "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
       "projectName": "DoomScroll",
-      "projectPath": "C:\\Users\\Esports Research Lab\\Desktop\\GitAmongUsMod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
+      "projectPath": "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
       "packagesPath": "C:\\Users\\Esports Research Lab\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Esports Research Lab\\Desktop\\GitAmongUsMod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\obj\\",
+      "outputPath": "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Esports Research Lab\\Desktop\\GitAmongUsMod\\Doom-Scroll-Among-Us-mod\\NuGet.Config",
+        "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\NuGet.Config",
         "C:\\Users\\Esports Research Lab\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2922,7 +2922,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -7,6 +7,11 @@ using TMPro;
 
 namespace DoomScroll.Common
 {
+    public enum FileType 
+    {
+        IMAGE,
+        MAPSOURCE
+    }
     public class File : IDirectory
     {
         // type?? image and mapsource ...
@@ -14,7 +19,8 @@ namespace DoomScroll.Common
         private string name;
         private string path;
         private CustomButton fileBtn;
-
+        private FileType type;
+        private byte[] content;
         public File(string parentPath, string name, GameObject parent, SpriteRenderer sr)
         {
             this.name = name;
@@ -38,6 +44,14 @@ namespace DoomScroll.Common
         public void DisplayContent() 
         {
             // display the content of the file 
+            switch (type) 
+            {
+                case FileType.IMAGE:
+
+                    return;
+                case FileType.MAPSOURCE:
+                    return;
+            }
         }
 
         public void HideContent()

@@ -30,7 +30,8 @@ namespace DoomScroll
 
             // Change button icon on hover
             FolderManager.Instance.FolderToggleBtn.ReplaceImgageOnHover();
-            
+            FolderManager.Instance.HomeBtn.ReplaceImgageOnHover();
+            FolderManager.Instance.BackBtn.ReplaceImgageOnHover();
 
             // Activate FolderToggle Button if Chat is open and hide if it's closed
             if (HudManager.Instance.Chat.IsOpen && !FolderManager.Instance.FolderToggleBtn.IsActive)
@@ -41,10 +42,10 @@ namespace DoomScroll
             else if (!HudManager.Instance.Chat.IsOpen && FolderManager.Instance.FolderToggleBtn.IsActive)
             {
                 FolderManager.Instance.FolderToggleBtn.ActivateButton(false);
-                // hide overlay too if it was still open
-                if (FolderManager.Instance.IsFolderOpen)
+                // hide overlay and current folders too if it was still open
+                if (FolderManager.Instance.IsFolderOverlayOpen)
                 {
-                    FolderManager.Instance.ActivateFolderOverlay(false);
+                    HudManagerPatch.FolderToggle.InvokeAction();
                 }
                 Logger<DoomScrollPlugin>.Info("INACTIVE ");
             }
@@ -66,28 +67,27 @@ namespace DoomScroll
                 }
             }
 
-            // Check if any of the displayed folders are clicked (could be handled with events...)
-            if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.IsFolderOpen)
+            
+            if (HudManager.Instance.Chat.IsOpen && FolderManager.Instance.IsFolderOverlayOpen)
             {
-               /* FolderManager.Instance.HomeBtn.ReplaceImgageOnHover();
-                FolderManager.Instance.BackBtn.ReplaceImgageOnHover();*/
                 try
                 {
                     if ( FolderManager.Instance.CloseBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                     {
                         HudManagerPatch.FolderToggle.InvokeAction();
                     }
-                   /* if (FolderManager.Instance.BackBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
-                    {
-                        FolderManager.Instance.OnClickBackButton();
-                    }
                     if (FolderManager.Instance.HomeBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                     {
-                        FolderManager.Instance.OnClickHomeButton();
-                    }*/
+                        HudManagerPatch.HomeFolder.InvokeAction();
+                    }
+                    if (FolderManager.Instance.BackBtn.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
+                    {
+                        HudManagerPatch.PrevFolder.InvokeAction();
+                    }
+                    // Check if any of the displayed folders are clicked 
                     foreach (IDirectory dir in FolderManager.Instance.Current.Content)
                     {
-                        if (dir.GetButton().isHovered() && Input.GetKey(KeyCode.Mouse0)) 
+                        if (dir.GetButton().isHovered() && Input.GetKeyUp(KeyCode.Mouse0)) 
                         {
                             if (dir is Folder folder) 
                             {

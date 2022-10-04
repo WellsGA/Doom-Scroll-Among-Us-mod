@@ -28,6 +28,7 @@ namespace DoomScroll.Common
             Sprite[] images = { folderImg };
             folderBtn = new CustomButton(parentUI, images, parentUI.transform.position, sr.size/5 - new Vector2(0.2f, 0.2f), name);  
             new CustomText(name, folderBtn.ButtonGameObject, name);
+            folderBtn.ActivateButton(false);
         }
 
         public void AddItem(IDirectory item)
@@ -60,7 +61,7 @@ namespace DoomScroll.Common
  
             Vector3 pos = new Vector3(0f, 0f, -20f);
             float width = spriteRndr.size.x;
-            float height = spriteRndr.size.y;
+            float height = spriteRndr.size.y - 1f;
 
             // display items on a 5x5 grid 
             for (int i = 0; i < 5; i++)

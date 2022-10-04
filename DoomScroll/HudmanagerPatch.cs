@@ -13,6 +13,8 @@ namespace DoomScroll
         private static DoomScrollEvent Cameratoggle = new DoomScrollEvent();
         private static DoomScrollEvent CapturecSreen = new DoomScrollEvent();
         public static DoomScrollEvent FolderToggle = new DoomScrollEvent();
+        public static DoomScrollEvent HomeFolder = new DoomScrollEvent();
+        public static DoomScrollEvent PrevFolder = new DoomScrollEvent();
 
         [HarmonyPostfix]
         [HarmonyPatch("Start")]
@@ -22,6 +24,8 @@ namespace DoomScroll
             Cameratoggle.MyAction += ScreenshotManager.Instance.OnClickCamera;
             CapturecSreen.MyAction += ScreenshotManager.Instance.OnClickCaptureScreenshot;
             FolderToggle.MyAction += FolderManager.Instance.OnClickFolderBtn;
+            HomeFolder.MyAction += FolderManager.Instance.OnClickHomeButton;
+            PrevFolder.MyAction += FolderManager.Instance.OnClickBackButton;
         }
 
         [HarmonyPostfix]

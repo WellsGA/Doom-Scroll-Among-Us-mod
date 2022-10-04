@@ -30,7 +30,7 @@ namespace DoomScroll
         public CustomButton HomeBtn { get; private set; }
         public CustomButton BackBtn { get; private set; }
         public GameObject pathText;
-        public bool IsFolderOpen { get; private set; }
+        public bool IsFolderOverlayOpen { get; private set; }
         public GameObject FolderOverlay { get; private set; }
 
         private Folder root;
@@ -76,20 +76,20 @@ namespace DoomScroll
 
             // close button 
             SpriteRenderer sr2 = HudManager.Instance.MapButton;
-            Vector2 buttonSize = sr2 ? sr2.size : new Vector2(0.5f, 0.5f);
-            Vector3 position = new Vector3(-sr.size.x/2 - buttonSize.x /2 , sr.size.y/2, -5f);
+            Vector2 buttonSize = sr2 ? sr2.size / 1.3f : new Vector2(0.5f, 0.5f);
+            Vector3 position = new Vector3(-sr.size.x/2 - buttonSize.x/2 , sr.size.y/2 - buttonSize.y/2, -5f);
             Sprite[] closeBtnImg = { ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.closeButton.png") };
             CloseBtn = new CustomButton(FolderOverlay, closeBtnImg, position, buttonSize, "Close FolderOverlay");
 
             // home button
             Sprite[] homeBtnImg = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.homeButton.png", slices);
-            Vector3 homePosition = new Vector3(-sr.size.x / 2 + buttonSize.x / 4, sr.size.y / 2 - buttonSize.y / 4, -5f);
-            HomeBtn = new CustomButton(FolderOverlay, homeBtnImg, homePosition, buttonSize /2, "Back to Home");
+            Vector3 homePosition = new Vector3(-sr.size.x / 2 + buttonSize.x /2, sr.size.y / 2 - buttonSize.y/2, -5f);
+            HomeBtn = new CustomButton(FolderOverlay, homeBtnImg, homePosition, buttonSize, "Back to Home");
 
             // back button
             Sprite[] backBtnImg = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.backButton.png", slices);
-            Vector3 backPosition = homePosition + new Vector3(buttonSize.x /2, 0, 0);
-            HomeBtn = new CustomButton(FolderOverlay, backBtnImg, backPosition, buttonSize /2, "Back to Home");
+            Vector3 backPosition = homePosition + new Vector3(buttonSize.x, 0, 0);
+            BackBtn = new CustomButton(FolderOverlay, backBtnImg, backPosition, buttonSize, "Back to Previous");
 
             // path
             /*pathText = new GameObject();
@@ -101,7 +101,7 @@ namespace DoomScroll
             new CustomText("path", pathText, Current.GetPath());
 */
             // deactivate by default
-            IsFolderOpen = false;
+            IsFolderOverlayOpen = false;
             FolderOverlay.SetActive(false);
         }
         private void InitFolderStructure() 
@@ -111,27 +111,47 @@ namespace DoomScroll
             Sprite folder = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folder.png");
 
             root = new Folder("", "Home", FolderOverlay, sr, folderEmpty);
-            root.GetButton().ActivateButton(false);
-
-            root.AddItem(new Folder(root.GetPath(), "Images", FolderOverlay, sr, folder));
-            root.AddItem(new Folder(root.GetPath(), "Tasks", FolderOverlay, sr, folderEmpty));
+            Folder images = new Folder(root.GetPath(), "Images", FolderOverlay, sr, folder);
+            Folder tasks = new Folder(root.GetPath(), "Tasks", FolderOverlay, sr, folderEmpty);
+            root.AddItem(images);
+            root.AddItem(tasks);
             root.AddItem(new Folder(root.GetPath(), "Checkpoints", FolderOverlay, sr, folderEmpty));
+           
+            Folder subImage = new Folder(images.GetPath(), "SubImages-1", FolderOverlay, sr, folderEmpty);
+            images.AddItem(subImage);
+            images.AddItem(new Folder(images.GetPath(), "SubImages-2", FolderOverlay, sr, folderEmpty));
+            images.AddItem(new Folder(images.GetPath(), "SubImages-3", FolderOverlay, sr, folderEmpty));
+            images.AddItem(new Folder(images.GetPath(), "SubImages-4", FolderOverlay, sr, folderEmpty));
+            images.AddItem(new Folder(images.GetPath(), "SubImages-5", FolderOverlay, sr, folderEmpty));
+            images.AddItem(new Folder(images.GetPath(), "SubImages-6", FolderOverlay, sr, folderEmpty));
+            images.AddItem(new Folder(images.GetPath(), "SubImages-7", FolderOverlay, sr, folderEmpty));
+
+            subImage.AddItem(new Folder(subImage.GetPath(), "Sub-SubImages-1", FolderOverlay, sr, folder));
+            subImage.AddItem(new Folder(subImage.GetPath(), "Sub-SubImages-2", FolderOverlay, sr, folder));
+
+            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-1", FolderOverlay, sr, folderEmpty));
+            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-2", FolderOverlay, sr, folderEmpty));
+            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-3", FolderOverlay, sr, folderEmpty));
+            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-4", FolderOverlay, sr, folderEmpty));
+
             Current = root;
+            previous = root;
             Logger<DoomScrollPlugin>.Info("Folder structure initiallized");
         }
 
         private void ToggleFolderOverlay()
         {
-            if (IsFolderOpen)
+            if (IsFolderOverlayOpen)
             {
                 ActivateFolderOverlay(false);
+                Current.HideContent();
                 Logger<DoomScrollPlugin>.Info("CURRENT FOLDER CLOSED");
             }
             else 
             {
                 ActivateFolderOverlay(true);
                 Logger<DoomScrollPlugin>.Info("ROOT FOLDER OPEN");
-                // (re)sets root as the current folder and displays its content
+                // (re)sets root as the current and previous folder and displays its content
                 Current = root;
                 previous = root;
                 Current.DisplayContent();
@@ -142,30 +162,18 @@ namespace DoomScroll
 
         public void ActivateFolderOverlay(bool value)
         {
-            IsFolderOpen = value;
+            IsFolderOverlayOpen = value;
             FolderOverlay.SetActive(value);
         }
-        //returns the first item with matching name or null
-       /* public Folder GetFolderByName(string name, Folder folder)
-        {
-            foreach (IDirectory dir in folder.Content)
-            {
-                if (dir.GetName().Equals(name) && dir.GetType().Equals(folder))
-                {
-                    return (Folder)dir;
-                }
-            }
-            return null;
-        }*/
 
         public void ChangeDirectory(Folder folder) 
         {
-            if (FolderToggleBtn.IsActive && IsFolderOpen) 
+            if (FolderToggleBtn.IsActive && IsFolderOverlayOpen) 
             {
                 previous = Current;
                 Current = folder;
                 previous.HideContent();
-                folder.DisplayContent();
+                Current.DisplayContent();
             }
         }
 
