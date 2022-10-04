@@ -40,11 +40,11 @@ namespace DoomScroll
         private FolderManager()
         {
             // setting Chat UI as the parent gameobject
-            m_UIParent = HudManager.Instance.Chat.OpenKeyboardButton.transform.parent.gameObject;
-            
+            m_UIParent = HudManager.Instance.Chat.OpenKeyboardButton.transform.parent.gameObject;   
             CreateFolderBtn();
             CreateFolderOverlay();
             InitFolderStructure();
+            Logger<DoomScrollPlugin>.Info("Folder manager initiallized");
         }
         private void CreateFolderBtn() 
         {  
@@ -116,27 +116,9 @@ namespace DoomScroll
             root.AddItem(images);
             root.AddItem(tasks);
             root.AddItem(new Folder(root.GetPath(), "Checkpoints", FolderOverlay, sr, folderEmpty));
-           
-            Folder subImage = new Folder(images.GetPath(), "SubImages-1", FolderOverlay, sr, folderEmpty);
-            images.AddItem(subImage);
-            images.AddItem(new Folder(images.GetPath(), "SubImages-2", FolderOverlay, sr, folderEmpty));
-            images.AddItem(new Folder(images.GetPath(), "SubImages-3", FolderOverlay, sr, folderEmpty));
-            images.AddItem(new Folder(images.GetPath(), "SubImages-4", FolderOverlay, sr, folderEmpty));
-            images.AddItem(new Folder(images.GetPath(), "SubImages-5", FolderOverlay, sr, folderEmpty));
-            images.AddItem(new Folder(images.GetPath(), "SubImages-6", FolderOverlay, sr, folderEmpty));
-            images.AddItem(new Folder(images.GetPath(), "SubImages-7", FolderOverlay, sr, folderEmpty));
-
-            subImage.AddItem(new Folder(subImage.GetPath(), "Sub-SubImages-1", FolderOverlay, sr, folder));
-            subImage.AddItem(new Folder(subImage.GetPath(), "Sub-SubImages-2", FolderOverlay, sr, folder));
-
-            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-1", FolderOverlay, sr, folderEmpty));
-            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-2", FolderOverlay, sr, folderEmpty));
-            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-3", FolderOverlay, sr, folderEmpty));
-            tasks.AddItem(new Folder(tasks.GetPath(), "SubTasks-4", FolderOverlay, sr, folderEmpty));
 
             Current = root;
             previous = root;
-            Logger<DoomScrollPlugin>.Info("Folder structure initiallized");
         }
 
         private void ToggleFolderOverlay()
@@ -155,7 +137,6 @@ namespace DoomScroll
                 Current = root;
                 previous = root;
                 Current.DisplayContent();
-                Logger<DoomScrollPlugin>.Info(root.PrintDirectory());
             }
 
         }
@@ -193,6 +174,11 @@ namespace DoomScroll
         public void OnClickBackButton()
         {
             ChangeDirectory(previous);
+        }
+
+        public void Destroy() 
+        {
+            _instance = null;
         }
     }
 }

@@ -41,6 +41,7 @@ namespace DoomScroll
            
             CreateCameraButton();
             InitScreenshotOverlay();
+            Logger<DoomScrollPlugin>.Info("Screenshot manager initiallized");
         }
 
         private void ToggleCamera() 
@@ -164,7 +165,10 @@ namespace DoomScroll
             {
                 CameraButton.EnableButton(false);
             }
-
+        }
+        public void Destroy()
+        {
+            _instance = null;
         }
     }
 }

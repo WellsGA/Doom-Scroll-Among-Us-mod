@@ -1,21 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alain\\Documents\\GitHub\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll.csproj": {}
+    "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alain\\Documents\\GitHub\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll.csproj": {
+    "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj": {
       "version": "1.0.0-dev",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alain\\Documents\\GitHub\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
+        "projectUniqueName": "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
         "projectName": "DoomScroll",
-        "projectPath": "C:\\Users\\alain\\Documents\\GitHub\\Doom-Scroll---Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
-        "packagesPath": "C:\\Users\\alain\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alain\\Documents\\GitHub\\Doom-Scroll---Among-Us-mod\\DoomScroll\\obj\\",
+        "projectPath": "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
+        "packagesPath": "C:\\Users\\Esports Research Lab\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\alain\\Documents\\GitHub\\Doom-Scroll---Among-Us-mod\\NuGet.Config",
-          "C:\\Users\\alain\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\NuGet.Config",
+          "C:\\Users\\Esports Research Lab\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -81,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
