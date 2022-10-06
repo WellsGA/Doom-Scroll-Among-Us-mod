@@ -74,7 +74,8 @@ namespace DoomScroll
             SpriteRenderer sr = FolderOverlay.AddComponent<SpriteRenderer>();
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderOverlay.png");
             sr.sprite = spr;
-            // sr.size = HudManager.Instance.Chat.OpenKeyboardButton ? HudManager.Instance.Chat.OpenKeyboardButton.GetComponent<SpriteRenderer>().size * 5f : new Vector2(0.065f, 0.065f);
+
+            Vector2 scaledSize = sr.size * FolderOverlay.transform.localScale;
            
             // close button 
             SpriteRenderer sr2 = HudManager.Instance.MapButton;
