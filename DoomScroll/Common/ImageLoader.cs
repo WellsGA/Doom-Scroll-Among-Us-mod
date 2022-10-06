@@ -9,6 +9,21 @@ namespace DoomScroll.Common
     // Resposible for loading images embedded in current assembly
     public static class ImageLoader
     {
+
+        // makes sprite from a byte array
+        public static Sprite ReadImageFromByteArray(byte[] imageByte)
+        {
+            // uses ARGB32 as texture format, asset needs to be .png!!
+            Texture2D tex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            ImageConversion.LoadImage(tex, imageByte, false);
+            return Sprite.Create(
+                tex,
+                new Rect(0, 0, tex.width, tex.height),
+                new Vector2(0.5f, 0.5f)
+            );
+        }
+
+
         // the whole image is one sprite
         public static Sprite ReadImageFromAssembly(Assembly assembly, string resource)
         {

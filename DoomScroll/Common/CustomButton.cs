@@ -12,7 +12,7 @@ namespace DoomScroll.Common
     public class CustomButton
     {
         public GameObject ButtonGameObject { get; private set; }
-        private RectTransform m_rectTransform;
+        private BoxCollider2D m_collider;
         private SpriteRenderer m_spriteRenderer;
         private Sprite[] buttonIcons;
         private bool isDefaultImg;
@@ -20,23 +20,22 @@ namespace DoomScroll.Common
         public bool IsActive { get; private set; }
        
 
-        public CustomButton(GameObject parent, Sprite[] images, Vector3 position, Vector2 size, string name)
+        public CustomButton(GameObject parent, Sprite[] images, Vector3 position, Vector2 scaledsize, string name)
         {
             ButtonGameObject = new GameObject();
             ButtonGameObject.layer = LayerMask.NameToLayer("UI");
             ButtonGameObject.name = name;
-            m_rectTransform = ButtonGameObject.AddComponent<RectTransform>();
-            m_rectTransform.SetParent(parent.transform, true);
-            m_rectTransform.transform.localPosition = position;
+            ButtonGameObject.transform.SetParent(parent.transform, true);
+            ButtonGameObject.transform.localPosition = position;
+            m_collider = ButtonGameObject.AddComponent<BoxCollider2D>();
             
             buttonIcons = images;
-            // debug:// Logger<DoomScrollPlugin>.Info("BUTTON 0: " + buttonIcons[0].rect);
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
-           
+            m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
             SetButtonImg(ImageType.DEFAULT);
             // size has to be set after setting the image!
-            float scale = size.x / m_spriteRenderer.size.x;
-            m_spriteRenderer.transform.localScale *= scale;
+            m_collider.size = scaledsize;
+            m_spriteRenderer.size = scaledsize;
 
             ActivateButton(true);
             EnableButton(true);
@@ -107,7 +106,7 @@ namespace DoomScroll.Common
 
         public void SetLocalPosition(Vector3 pos) 
         {
-            m_rectTransform.transform.localPosition = pos;
+            ButtonGameObject.transform.localPosition = pos;
         }
     }
 }

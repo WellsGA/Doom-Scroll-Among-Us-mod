@@ -36,11 +36,12 @@ namespace DoomScroll
         private Folder root;
         private Folder previous;
         public Folder Current { get; private set; }
-        
+        public Folder Screenshots { get; private set; } 
+        public Folder Tasks { get; private set; }
         private FolderManager()
         {
             // setting Chat UI as the parent gameobject
-            m_UIParent = HudManager.Instance.Chat.OpenKeyboardButton.transform.parent.gameObject;   
+            m_UIParent = HudManager.Instance.Chat.OpenKeyboardButton.transform.parent.gameObject;
             CreateFolderBtn();
             CreateFolderOverlay();
             InitFolderStructure();
@@ -68,27 +69,28 @@ namespace DoomScroll
             FolderOverlay.layer = LayerMask.NameToLayer("UI");
             FolderOverlay.transform.SetParent(m_UIParent.transform);
             FolderOverlay.transform.localPosition = new Vector3(0f, 0f, -10f);
-            FolderOverlay.transform.localScale = m_UIParent.transform.localScale * 0.9f;
+            FolderOverlay.transform.localScale = m_UIParent.transform.localScale * 0.4f;
 
             SpriteRenderer sr = FolderOverlay.AddComponent<SpriteRenderer>();
             Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderOverlay.png");
             sr.sprite = spr;
-
+            // sr.size = HudManager.Instance.Chat.OpenKeyboardButton ? HudManager.Instance.Chat.OpenKeyboardButton.GetComponent<SpriteRenderer>().size * 5f : new Vector2(0.065f, 0.065f);
+           
             // close button 
             SpriteRenderer sr2 = HudManager.Instance.MapButton;
             Vector2 buttonSize = sr2 ? sr2.size / 1.3f : new Vector2(0.5f, 0.5f);
-            Vector3 position = new Vector3(-sr.size.x/2 - buttonSize.x/2 , sr.size.y/2 - buttonSize.y/2, -5f);
+            Vector3 position = new Vector3(-sr.size.x/2 - buttonSize.x , sr.size.y/2 - buttonSize.y, -5f);
             Sprite[] closeBtnImg = { ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.closeButton.png") };
             CloseBtn = new CustomButton(FolderOverlay, closeBtnImg, position, buttonSize, "Close FolderOverlay");
 
             // home button
             Sprite[] homeBtnImg = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.homeButton.png", slices);
-            Vector3 homePosition = new Vector3(-sr.size.x / 2 + buttonSize.x /2, sr.size.y / 2 - buttonSize.y/2, -5f);
+            Vector3 homePosition = new Vector3(-sr.size.x / 2 + buttonSize.x, sr.size.y / 2 - buttonSize.y, -5f);
             HomeBtn = new CustomButton(FolderOverlay, homeBtnImg, homePosition, buttonSize, "Back to Home");
 
             // back button
             Sprite[] backBtnImg = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.backButton.png", slices);
-            Vector3 backPosition = homePosition + new Vector3(buttonSize.x, 0, 0);
+            Vector3 backPosition = homePosition + new Vector3(buttonSize.x * 2, 0, 0);
             BackBtn = new CustomButton(FolderOverlay, backBtnImg, backPosition, buttonSize, "Back to Previous");
 
             // path
@@ -106,16 +108,14 @@ namespace DoomScroll
         }
         private void InitFolderStructure() 
         {
-            SpriteRenderer sr = FolderOverlay.GetComponent<SpriteRenderer>();
             Sprite folderEmpty = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folderEmpty.png");
-            Sprite folder = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.folder.png");
 
-            root = new Folder("", "Home", FolderOverlay, sr, folderEmpty);
-            Folder images = new Folder(root.GetPath(), "Images", FolderOverlay, sr, folder);
-            Folder tasks = new Folder(root.GetPath(), "Tasks", FolderOverlay, sr, folderEmpty);
-            root.AddItem(images);
-            root.AddItem(tasks);
-            root.AddItem(new Folder(root.GetPath(), "Checkpoints", FolderOverlay, sr, folderEmpty));
+            root = new Folder("", "Home", FolderOverlay, folderEmpty);
+            Screenshots = new Folder(root.GetPath(), "Images", FolderOverlay, folderEmpty);
+            Tasks = new Folder(root.GetPath(), "Tasks", FolderOverlay, folderEmpty);
+            root.AddItem(Screenshots);
+            root.AddItem(Tasks);
+            root.AddItem(new Folder(root.GetPath(), "Checkpoints", FolderOverlay, folderEmpty));
 
             Current = root;
             previous = root;
@@ -123,6 +123,7 @@ namespace DoomScroll
 
         private void ToggleFolderOverlay()
         {
+            if (!FolderOverlay) { return; }
             if (IsFolderOverlayOpen)
             {
                 ActivateFolderOverlay(false);

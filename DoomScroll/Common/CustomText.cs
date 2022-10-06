@@ -38,13 +38,13 @@ namespace DoomScroll.Common
             // sets the defaul position under the parent object
             SetPosition(TextPosition.BELOWPARENT);
             m_meshRenderer = TextObject.AddComponent<MeshRenderer>();
-            m_meshRenderer.transform.localScale = parent.transform.localScale;
 
             TextMP = TextObject.AddComponent<TextMeshPro>();
             TextMP.text = text;
             TextMP.m_enableWordWrapping = true;
             TextMP.alignment = TextAlignmentOptions.Center;
             TextMP.color = Color.black;
+            TextMP.fontSize = 6f;
         }
 
         public void SetPosition(TextPosition pos) 

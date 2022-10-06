@@ -21,12 +21,16 @@ namespace DoomScroll.Common
         private CustomButton fileBtn;
         private FileType type;
         private byte[] content;
-        public File(string parentPath, string name, GameObject parent, SpriteRenderer sr)
+
+        private GameObject parent = FolderManager.Instance.FolderOverlay;
+        public File(string parentPath, string name, byte[] image)
         {
             this.name = name;
             path = parentPath + "/" + name;
-            Sprite[] images = { ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.file.png") };
-            fileBtn = new CustomButton(parent, images, parent.transform.position, sr.size / 5, name);
+            content = image;
+            Sprite[] images = { ImageLoader.ReadImageFromByteArray(content) };
+            
+            fileBtn = new CustomButton(parent, images, parent.transform.position, parent.GetComponent<SpriteRenderer>().size / 5, name);
             new CustomText(name, fileBtn.ButtonGameObject, name);
         }
         public string GetName()
