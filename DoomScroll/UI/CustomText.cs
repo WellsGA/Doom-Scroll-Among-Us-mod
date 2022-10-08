@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
-namespace DoomScroll.Common
+namespace DoomScroll.UI
 {
     public enum TextPosition 
     {

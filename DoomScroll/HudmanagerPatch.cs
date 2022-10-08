@@ -65,8 +65,8 @@ namespace DoomScroll
         [HarmonyPatch("OnDestroy")]
         public static void PostfixOnDestroy()
         {
-            FolderManager.Instance.Destroy();
-            ScreenshotManager.Instance.Destroy();
+            FolderManager.Instance.ReSet();
+            ScreenshotManager.Instance.ReSet();
         }
 
     }

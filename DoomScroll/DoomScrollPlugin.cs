@@ -15,10 +15,10 @@ namespace DoomScroll {
 
         public override void Load()
         {
-            Logger<DoomScrollPlugin>.Info(" ---------  DoomScroll Plugin Loaded ---------");
-            Harmony.PatchAll();
 
-            //
+            Logger<DoomScrollPlugin>.Info(" ---------  DoomScroll Plugin Loaded ---------");
+
+            Harmony.PatchAll();
 
         }
 

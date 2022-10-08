@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Reactor;
-using UnityEngine;
-using TMPro;
+﻿using UnityEngine;
+using DoomScroll.UI;
 
 namespace DoomScroll.Common
 {
@@ -22,7 +18,7 @@ namespace DoomScroll.Common
         private FileType type;
         private byte[] content;
 
-        private GameObject parent = FolderManager.Instance.FolderOverlay;
+        private GameObject parentUI = FolderManager.Instance.FolderHolder;
         public File(string parentPath, string name, byte[] image)
         {
             this.name = name;
@@ -30,7 +26,7 @@ namespace DoomScroll.Common
             content = image;
             Sprite[] images = { ImageLoader.ReadImageFromByteArray(content) };
             
-            fileBtn = new CustomButton(parent, images, parent.transform.position, parent.GetComponent<SpriteRenderer>().size / 5, name);
+            fileBtn = new CustomButton(parentUI, images, parentUI.transform.position, parentUI.GetComponent<SpriteRenderer>().size / 5, name);
             new CustomText(name, fileBtn.ButtonGameObject, name);
         }
         public string GetName()
@@ -39,7 +35,7 @@ namespace DoomScroll.Common
         }
         public string GetPath()
         {
-            return name;
+            return path;
         }
         public CustomButton GetButton() 
         {
@@ -57,7 +53,6 @@ namespace DoomScroll.Common
                     return;
             }
         }
-
         public void HideContent()
         {
             // hide the content -- close the overlay

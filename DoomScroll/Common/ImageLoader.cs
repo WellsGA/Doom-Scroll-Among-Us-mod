@@ -9,7 +9,6 @@ namespace DoomScroll.Common
     // Resposible for loading images embedded in current assembly
     public static class ImageLoader
     {
-
         // makes sprite from a byte array
         public static Sprite ReadImageFromByteArray(byte[] imageByte)
         {

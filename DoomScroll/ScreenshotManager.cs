@@ -2,6 +2,7 @@
 using Reactor;
 using System.Reflection;
 using DoomScroll.Common;
+using DoomScroll.UI;
 
 namespace DoomScroll
 {
@@ -10,9 +11,9 @@ namespace DoomScroll
     public sealed class ScreenshotManager
     {
         private static ScreenshotManager _instance;
-        public static ScreenshotManager Instance 
+        public static ScreenshotManager Instance
         {
-            get 
+            get
             {
                 if (_instance == null)
                 {
@@ -21,89 +22,31 @@ namespace DoomScroll
                 return _instance;
             }
         }
-
-        private HudManager hudManagerInsance;
-        private Camera mainCamrea;
-        private GameObject m_cameraOverlay;
-        private int m_screenshots;
-        private bool m_isCameraOpen;
-        private int m_maxPictures;
-        public CustomButton CaptureScreenButton { get; private set; }
+        private  HudManager hudManagerInstance;
+        private GameObject UIOverlay;
         public CustomButton CameraButton { get; private set; }
+        public CustomButton CaptureScreenButton { get; private set; }
 
+        private Camera mainCamrea;
+        private int m_screenshots;
+        private int m_maxPictures;
+        private bool m_isCameraOpen;
         private ScreenshotManager() 
         {
+            hudManagerInstance = HudManager.Instance;
+            mainCamrea = Camera.main;
             m_screenshots = 0;
             m_maxPictures = 3;
-            // get HudManager Instance and main Camera
-            hudManagerInsance = HudManager.Instance;
-            mainCamrea = hudManagerInsance.GetComponentInParent<Camera>();
-           
-            CreateCameraButton();
-            InitScreenshotOverlay();
-           
-        }
-
-        private void ToggleCamera() 
-        {
-            if (!m_cameraOverlay) { return; }
-            if (m_isCameraOpen)
-            {
-                m_cameraOverlay.SetActive(false);
-                CaptureScreenButton.EnableButton(false);
-                m_isCameraOpen = false;
-                hudManagerInsance.SetHudActive(true);
-            }
-            else 
-            {
-                m_cameraOverlay.SetActive(true);
-                CaptureScreenButton.EnableButton(true);
-                m_isCameraOpen = true;
-                hudManagerInsance.SetHudActive(false);
-            }
-            Logger<DoomScrollPlugin>.Info("Camera overlay active: " + m_isCameraOpen);
-        }
-
-        private void CreateCameraButton() 
-        {
-            GameObject m_UIParent = hudManagerInsance.gameObject;
-            Vector3 mapBtnPos = hudManagerInsance.MapButton.transform.position;
-            Vector3 position = new Vector3(mapBtnPos.x, mapBtnPos.y - hudManagerInsance.MapButton.size.y * hudManagerInsance.MapButton.transform.localScale.y, mapBtnPos.z);
-            Vector2 scaledSize = hudManagerInsance.MapButton.size *  HudManager.Instance.MapButton.transform.localScale;
-            Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
-            Sprite[] cameraBtnSprites = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png", slices);
-
-            CameraButton = new CustomButton(m_UIParent, cameraBtnSprites, position, scaledSize, "Camera Toggle Button");
-        }
-
-        private void InitScreenshotOverlay()
-        {
-            m_cameraOverlay = new GameObject();
-            m_cameraOverlay.name = "ScreenshotOverlay";
-            m_cameraOverlay.layer = LayerMask.NameToLayer("UI");
-            m_cameraOverlay.transform.SetParent(hudManagerInsance.transform);
-            m_cameraOverlay.transform.localPosition = new Vector3(0f, 0f, -5);
-
-            SpriteRenderer sr = m_cameraOverlay.AddComponent<SpriteRenderer>();
-            Sprite spr = ImageLoader.ReadImageFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraOverlay.png");
-            sr.sprite = spr;
-
-            // add the capture button
-            Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
-            Sprite[] captureSprite = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.captureScreenNew.png", slices);
-            Vector3 pos = new Vector3(sr.size.x / 2 - 0.7f, 0, -10);
-            
-            CaptureScreenButton = new CustomButton(m_cameraOverlay, captureSprite, pos, new Vector2(0.6f, 0.6f), "Screenshot Button");
-
-            // deactivate by default
             m_isCameraOpen = false;
-            m_cameraOverlay.SetActive(false);
-            Logger<DoomScrollPlugin>.Info("Screenshot manager initiallized");
+
+            CameraButton = ScreenshotOverlay.CreateCameraButton(hudManagerInstance);
+            UIOverlay = ScreenshotOverlay.InitCameraOverlay(hudManagerInstance);
+            CaptureScreenButton = ScreenshotOverlay.CreateCaptureButton(UIOverlay);
+            Logger<DoomScrollPlugin>.Info("SCREENSHOT MANAGER CONSTRUCTOR");
         }
 
         private void CaptureScreenshot()
         {  
-            // check for null refernce 
             if (mainCamrea)
             {
                 // hide player and overlay
@@ -132,8 +75,7 @@ namespace DoomScroll
                 System.IO.File.WriteAllBytes(Application.dataPath + "/cameracapture_" + m_screenshots + ".png", byteArray);
 
                 // save the in the inventory folder
-                Folder screenShoots = FolderManager.Instance.Screenshots;
-                screenShoots.AddItem(new File(screenShoots.GetPath(), "image_" + m_screenshots + ".png", byteArray));
+                FolderManager.Instance.AddImageToScreenshots("image_" + m_screenshots + ".png", byteArray);
 
                 Object.Destroy(screeenShot);
                 m_screenshots++;
@@ -145,13 +87,32 @@ namespace DoomScroll
         private void ShowOverlays(bool value)
         {
             PlayerControl.LocalPlayer.gameObject.SetActive(value);
-            m_cameraOverlay.SetActive(value);
+            UIOverlay.SetActive(value);
+        }
+
+        public void ToggleCamera()
+        {
+            if (!UIOverlay) { return; }
+            if (m_isCameraOpen)
+            {
+                UIOverlay.SetActive(false);
+                CaptureScreenButton.EnableButton(false);
+                m_isCameraOpen = false;
+                HudManager.Instance.SetHudActive(true);
+            }
+            else
+            {
+                UIOverlay.SetActive(true);
+                CaptureScreenButton.EnableButton(true);
+                m_isCameraOpen = true;
+                HudManager.Instance.SetHudActive(false);
+            }
         }
 
         // methods subscribing to the button click events 
         public void OnClickCamera()
         {
-            ToggleCamera();
+           ToggleCamera();
         }
 
         public void OnClickCaptureScreenshot()
@@ -164,9 +125,14 @@ namespace DoomScroll
                 CameraButton.EnableButton(false);
             }
         }
-        public void Destroy()
-        {
+
+        public void ReSet()
+        {   
+            m_screenshots = 0;
+            m_isCameraOpen = false;
             _instance = null;
+            Logger<DoomScrollPlugin>.Info("SCREENSHOT MANAGER RESET");
         }
+
     }
 }

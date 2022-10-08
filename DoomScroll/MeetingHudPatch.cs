@@ -20,8 +20,7 @@ namespace DoomScroll
         [HarmonyPatch("HandleProceed")]
         public static void PostfixHandleProceed()
         {
-            ScreenshotManager.Instance.CameraButton.ActivateButton(true);
-            Logger<DoomScrollPlugin>.Info("MEETING OVER CAMERA ON ");
+           ScreenshotManager.Instance.CameraButton.ActivateButton(true);
         }
 
         [HarmonyPostfix]
@@ -103,5 +102,6 @@ namespace DoomScroll
                 }
             }
         }
+
     }
 }

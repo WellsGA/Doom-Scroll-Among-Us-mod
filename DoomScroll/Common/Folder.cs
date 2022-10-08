@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Reflection;
+using DoomScroll.UI;
 using Reactor;
 
 namespace DoomScroll.Common

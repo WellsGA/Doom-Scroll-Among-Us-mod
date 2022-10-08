@@ -2,7 +2,7 @@
 using Reactor;
 
 
-namespace DoomScroll.Common
+namespace DoomScroll.UI
 {
     public enum ImageType{
         DEFAULT,
@@ -39,7 +39,6 @@ namespace DoomScroll.Common
 
             ActivateButton(true);
             EnableButton(true);
-            // debug: Logger<DoomScrollPlugin>.Info(" sprite renderer size: " + m_spriterenderer.size);
         }
 
         public bool isHovered()
@@ -77,12 +76,10 @@ namespace DoomScroll.Common
             if (isDefaultImg && isHovered())
             {
                 SetButtonImg(ImageType.HOVER);
-                Logger<DoomScrollPlugin>.Info("BUTTON HOVER");
             }
             else if (!isDefaultImg && !isHovered())
             {
                 SetButtonImg(ImageType.DEFAULT);
-                Logger<DoomScrollPlugin>.Info("BUTTON NOT HOVER");
             }
         }
         public void EnableButton(bool value)
