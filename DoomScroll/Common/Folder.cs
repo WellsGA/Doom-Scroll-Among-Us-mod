@@ -59,8 +59,8 @@ namespace DoomScroll.Common
         {
  
             Vector3 pos = new Vector3(0f, 0f, -20f);
-            float width = spriteRndr.size.x * spriteRndr.transform.localScale.x;
-            float height = spriteRndr.size.y * spriteRndr.transform.localScale.y - 1f;
+            float width = spriteRndr.size.x;
+            float height = spriteRndr.size.y - 1f;
 
             // display items on a 5x5 grid 
             for (int i = 0; i < 5; i++)
