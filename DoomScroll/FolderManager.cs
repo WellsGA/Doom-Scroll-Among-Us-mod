@@ -43,13 +43,14 @@ namespace DoomScroll
             // setting Chat UI as the parent gameobject
             m_UIParent = HudManager.Instance.Chat.OpenKeyboardButton.transform.parent.gameObject;
             IsFolderOverlayOpen = false;
-            InitFolderStructure();
             FolderToggleBtn = FolderOverlay.CreateFolderBtn(m_UIParent);
             FolderHolder = FolderOverlay.CreateFolderOverlay(m_UIParent);
             CloseBtn = FolderOverlay.AddCloseButton(FolderHolder);
             HomeBtn = FolderOverlay.AddHomeButton(FolderHolder);
             BackBtn = FolderOverlay.AddBackButton(FolderHolder);
-           
+
+            InitFolderStructure();
+            
             pathText = new CustomText("path", FolderOverlay.AddPath(FolderHolder), Current.GetPath());
 
             Logger<DoomScrollPlugin>.Info("Folder manager initiallized");

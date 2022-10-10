@@ -22,7 +22,7 @@ namespace DoomScroll.Common
             path = parentPath + "/" + name;
             parentUI = parent;
             spriteRndr = parent.GetComponent<SpriteRenderer>();
-            Vector2 scaledSize = spriteRndr.size * parent.transform.localScale; 
+            Vector2 scaledSize = spriteRndr ? spriteRndr.size * parent.transform.localScale : new Vector2(10f, 10f); 
             Content = new List<IDirectory>();
             Sprite[] images = { folderImg };
             folderBtn = new CustomButton(parentUI, images, parentUI.transform.position, scaledSize / 5 - new Vector2(0.2f, 0.2f), name);  
