@@ -54,12 +54,14 @@ namespace DoomScroll
             }
 
         }
-        [HarmonyPostfix]
-        [HarmonyPatch("CoFadeFullScreen")]
-        public static void PostfixCoFadeFullScreen() 
+        // [HarmonyPatch(typeof(HudManager._CoFadeFullScreen_d__66), "MoveNext")]
+       /* [HarmonyPostfix]
+        [HarmonyPatch("_CoFadeFullScreen_d__66")]
+        public static void PostfixCoFadeFullScreen()
         {
             ScreenshotManager.Instance.CameraButton.ActivateButton(true);
-        }
+            Logger<DoomScrollPlugin>.Info("CoFadeFullScreen ---- CAMERA ACTIVE");
+        }*/
 
         [HarmonyPostfix]
         [HarmonyPatch("OnDestroy")]

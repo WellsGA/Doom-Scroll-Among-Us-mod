@@ -42,6 +42,8 @@ namespace DoomScroll
             CameraButton = ScreenshotOverlay.CreateCameraButton(hudManagerInstance);
             UIOverlay = ScreenshotOverlay.InitCameraOverlay(hudManagerInstance);
             CaptureScreenButton = ScreenshotOverlay.CreateCaptureButton(UIOverlay);
+           
+            CameraButton.ActivateButton(false);
             Logger<DoomScrollPlugin>.Info("SCREENSHOT MANAGER CONSTRUCTOR");
         }
 
