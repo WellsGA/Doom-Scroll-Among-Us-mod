@@ -14,7 +14,7 @@ namespace DoomScroll
         [HarmonyPatch("BeginCrewmate")]
         public static void PostfixBeginCrewmate(IntroCutscene __instance)
         {
-            __instance.TeamTitle.text += "<size-=10><color=\"white\">Secondary Win Condition: " + "TESTCONDITION" + "</color></size>";
+            __instance.TeamTitle.text += "\n<size-=10><color=\"white\">Secondary Win Condition: " + "TESTCONDITION" + "</color></size>";
             //will replace "TESTCONDITION" with SecondaryWinConditionHolder.getSomePlayerSWC(PlayerControl.LocalPlayer._cachedData.PlayerId);
         }
 
@@ -22,7 +22,7 @@ namespace DoomScroll
         [HarmonyPatch("BeginImpostor")]
         public static void PostfixBeginImpostor(IntroCutscene __instance)
         {
-            __instance.TeamTitle.text += "<size-=10><color=\"white\">Secondary Win Condition: " + "TESTCONDITION" + "</color></size>";
+            __instance.TeamTitle.text += "\n<size-=10><color=\"white\">Secondary Win Condition: " + "TESTCONDITION" + "</color></size>";
             //will replace "TESTCONDITION" with SecondaryWinConditionHolder.getSomePlayerSWC(PlayerControl.LocalPlayer._cachedData.PlayerId);
         }
     }
