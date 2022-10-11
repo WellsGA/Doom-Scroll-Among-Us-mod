@@ -54,11 +54,11 @@ namespace DoomScroll
             }
 
         }
-
         [HarmonyPostfix]
-        [HarmonyPatch("OpenMeetingRoom")]
-        public static void PostfixOpenMeetingRoom(ChatController __instance)
+        [HarmonyPatch("CoFadeFullScreen")]
+        public static void PostfixCoFadeFullScreen() 
         {
+            ScreenshotManager.Instance.CameraButton.ActivateButton(true);
         }
 
         [HarmonyPostfix]

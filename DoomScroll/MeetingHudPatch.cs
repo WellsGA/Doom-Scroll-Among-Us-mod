@@ -9,25 +9,11 @@ namespace DoomScroll
     [HarmonyPatch(typeof(MeetingHud))]
     static class MeetingHudPatch
     {
-        [HarmonyPostfix]
-        [HarmonyPatch("Start")]  
-        public static void PostfixStart()
-        {
-            ScreenshotManager.Instance.CameraButton.ActivateButton(false);
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch("HandleProceed")]
-        public static void PostfixHandleProceed()
-        {
-           ScreenshotManager.Instance.CameraButton.ActivateButton(true);
-        }
-
+        
         [HarmonyPostfix]
         [HarmonyPatch("Update")]
         public static void PostfixUpdate()
         {
-
             // Change button icon on hover
             FolderManager.Instance.FolderToggleBtn.ReplaceImgageOnHover();
             FolderManager.Instance.HomeBtn.ReplaceImgageOnHover();
@@ -103,5 +89,11 @@ namespace DoomScroll
             }
         }
 
+        [HarmonyPostfix]
+        [HarmonyPatch("Close")]
+        public static void PostfixClose()
+        {
+            ScreenshotManager.Instance.CameraButton.ActivateButton(true);
+        }
     }
 }
