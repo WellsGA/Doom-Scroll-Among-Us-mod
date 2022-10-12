@@ -33,16 +33,16 @@ namespace DoomScroll
             }
         }
 
-        public static string getSomePlayerSWC(byte thisPlayerID)
+        public static SecondaryWinCondition getSomePlayerSWC(byte thisPlayerID)
         {
             foreach (PlayerSWCTracker swcAndPlayer in playerSWCList)
             {
                 if (swcAndPlayer.getPlayerID() == thisPlayerID)
                 {
-                    return "" + swcAndPlayer.getSWC().SWCAssignText();
+                    return swcAndPlayer.getSWC();
                 }
             }
-            return "";
+            return null;
         }
 
         public static string overallSWCResultsText() // text to put in to TMP object at end, when vicotory/defeat and success/failure for all players is revealed
