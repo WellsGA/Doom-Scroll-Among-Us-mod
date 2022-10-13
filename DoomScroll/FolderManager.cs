@@ -52,7 +52,7 @@ namespace DoomScroll
             InitFolderStructure();
             
             pathText = new CustomText("path", FolderOverlay.AddPath(FolderHolder), Current.GetPath());
-
+            pathText.SetPosition(TextPosition.RIGHTTOPARENT);
             Logger<DoomScrollPlugin>.Info("Folder manager initiallized");
         }
         

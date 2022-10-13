@@ -89,11 +89,12 @@ namespace DoomScroll
             }
         }
 
-        [HarmonyPostfix]
-        [HarmonyPatch("Close")]
-        public static void PostfixClose()
-        {
-            ScreenshotManager.Instance.CameraButton.ActivateButton(true);
-        }
+        /* [HarmonyPostfix]
+         [HarmonyPatch("Close")]
+         public static void PostfixClose()
+         {
+             ScreenshotManager.Instance.CameraButton.ActivateButton(true);
+             Logger<DoomScrollPlugin>.Info("MeetingHud.Close ---- CAMERA ACTIVE");
+         }*/
     }
 }

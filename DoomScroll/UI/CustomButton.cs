@@ -12,7 +12,7 @@ namespace DoomScroll.UI
     public class CustomButton
     {
         public GameObject ButtonGameObject { get; private set; }
-        private BoxCollider2D m_collider;
+        // private BoxCollider2D m_collider;
         private SpriteRenderer m_spriteRenderer;
         private Sprite[] buttonIcons;
         private bool isDefaultImg;
@@ -27,14 +27,13 @@ namespace DoomScroll.UI
             ButtonGameObject.name = name;
             ButtonGameObject.transform.SetParent(parent.transform, true);
             ButtonGameObject.transform.localPosition = position;
-            m_collider = ButtonGameObject.AddComponent<BoxCollider2D>();
+           // m_collider = ButtonGameObject.AddComponent<BoxCollider2D>();
             
             buttonIcons = images;
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
             m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
             SetButtonImg(ImageType.DEFAULT);
             // size has to be set after setting the image!
-            m_collider.size = scaledsize;
             m_spriteRenderer.size = scaledsize;
 
             ActivateButton(true);

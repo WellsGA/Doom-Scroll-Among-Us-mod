@@ -27,7 +27,7 @@ namespace DoomScroll.UI
             TextObject.layer = LayerMask.NameToLayer("UI");
             TextObject.name = name;
             this.parent = parent;
-            TextObject.transform.SetParent(this.parent.transform, true);
+            TextObject.transform.SetParent(this.parent.transform);
 
             SpriteRenderer sr = parent.GetComponent<SpriteRenderer>();
             parentSize = sr ? sr.size / 2 : new Vector2(0.5f, 0.5f);
@@ -35,13 +35,12 @@ namespace DoomScroll.UI
             // sets the defaul position under the parent object
             SetPosition(TextPosition.BELOWPARENT);
             m_meshRenderer = TextObject.AddComponent<MeshRenderer>();
-
             TextMP = TextObject.AddComponent<TextMeshPro>();
             TextMP.text = text;
             TextMP.m_enableWordWrapping = true;
             TextMP.alignment = TextAlignmentOptions.Center;
             TextMP.color = Color.black;
-            TextMP.fontSize = 6f;
+            TextMP.fontSize = parentSize.y *4f;
         }
 
         public void SetPosition(TextPosition pos) 

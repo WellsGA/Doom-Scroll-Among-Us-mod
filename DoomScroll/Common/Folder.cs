@@ -22,7 +22,7 @@ namespace DoomScroll.Common
             path = parentPath + "/" + name;
             parentUI = parent;
             spriteRndr = parent.GetComponent<SpriteRenderer>();
-            Vector2 scaledSize = spriteRndr ? spriteRndr.size * parent.transform.localScale : new Vector2(10f, 10f); 
+            Vector2 scaledSize = spriteRndr ? spriteRndr.size : new Vector2(10f, 10f); 
             Content = new List<IDirectory>();
             Sprite[] images = { folderImg };
             folderBtn = new CustomButton(parentUI, images, parentUI.transform.position, scaledSize / 5 - new Vector2(0.2f, 0.2f), name);  
@@ -59,18 +59,18 @@ namespace DoomScroll.Common
         {
  
             Vector3 pos = new Vector3(0f, 0f, -20f);
-            float width = spriteRndr.size.x;
+            float width = spriteRndr.size.x * 0.9f;
             float height = spriteRndr.size.y - 1f;
 
-            // display items on a 5x5 grid 
-            for (int i = 0; i < 5; i++)
+            // display items on a 5x4 grid 
+            for (int i = 0; i < 4; i++)
             {
                 for(int j = 0; j < 5; j++)
                 {
                     if(j+i*5 < Content.Count)
                     {
                         pos.x = j * width / 5 - width/2 + 0.7f;
-                        pos.y = i * -height / 5 + height/2 - 0.7f;
+                        pos.y = i * -height / 4 + height/2 - 0.7f;
                         Content[j+i*5].GetButton().SetLocalPosition(pos);
                         Content[j+i*5].GetButton().ActivateButton(true);
                     }

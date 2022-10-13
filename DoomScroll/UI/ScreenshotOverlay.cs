@@ -11,7 +11,7 @@ namespace DoomScroll.UI
             GameObject m_UIParent = hud.gameObject;
             Vector3 mapBtnPos = hud.MapButton.transform.position;
             Vector3 position = new Vector3(mapBtnPos.x, mapBtnPos.y - hud.MapButton.size.y * hud.MapButton.transform.localScale.y, mapBtnPos.z);
-            Vector2 scaledSize = hud.MapButton.size * HudManager.Instance.MapButton.transform.localScale;
+            Vector2 scaledSize = hud.MapButton.size * hud.MapButton.transform.localScale;
             Vector4[] slices = { new Vector4(0, 0.5f, 1, 1), new Vector4(0, 0, 1, 0.5f) };
             Sprite[] cameraBtnSprites = ImageLoader.ReadImageSlicesFromAssembly(Assembly.GetExecutingAssembly(), "DoomScroll.Assets.cameraFlash.png", slices);
 

@@ -32,11 +32,16 @@ namespace DoomScroll
         [HarmonyPatch("Update")]
         public static void PostfixUpdate()
         {
-            // Replace sprite on mouse hover for both buttons
-            ScreenshotManager.Instance.CameraButton.ReplaceImgageOnHover();
-            ScreenshotManager.Instance.CaptureScreenButton.ReplaceImgageOnHover();
+            if (!ScreenshotManager.Instance.CameraButton.ButtonGameObject
+                || !ScreenshotManager.Instance.CaptureScreenButton.ButtonGameObject)
+            { return; }
+            
             try
             {
+                // Replace sprite on mouse hover for both buttons
+                ScreenshotManager.Instance.CameraButton.ReplaceImgageOnHover();
+                ScreenshotManager.Instance.CaptureScreenButton.ReplaceImgageOnHover();
+
                 // Invoke methods on mouse click - open camera overlay
                 if (ScreenshotManager.Instance.CameraButton.isHovered() && Input.GetKeyUp(KeyCode.Mouse0))
                 {
@@ -52,16 +57,19 @@ namespace DoomScroll
             {
                 Logger<DoomScrollPlugin>.Error("Error invoking method: " + e);
             }
-
         }
+
+        [HarmonyPostfix]
         // [HarmonyPatch(typeof(HudManager._CoFadeFullScreen_d__66), "MoveNext")]
-       /* [HarmonyPostfix]
-        [HarmonyPatch("_CoFadeFullScreen_d__66")]
-        public static void PostfixCoFadeFullScreen()
+        [HarmonyPatch("CoFadeFullScreen")]
+        public static void PostfixCoFadeFullScreen(HudManager __instance, ref Color target)
         {
-            ScreenshotManager.Instance.CameraButton.ActivateButton(true);
-            Logger<DoomScrollPlugin>.Info("CoFadeFullScreen ---- CAMERA ACTIVE");
-        }*/
+            if (__instance.FullScreen.gameObject.activeSelf && __instance.FullScreen.color == target) 
+            {
+                ScreenshotManager.Instance.CameraButton.ActivateButton(true);
+                Logger<DoomScrollPlugin>.Info("HudManager.CoFadeFullScreen ---- CAMERA ACTIVE");
+            }
+        }
 
         [HarmonyPostfix]
         [HarmonyPatch("OnDestroy")]
