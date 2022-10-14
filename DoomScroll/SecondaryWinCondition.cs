@@ -147,7 +147,7 @@ namespace DoomScroll
         public string SWCResultsText() // text to put in to TMP object at end, when vicotory/defeat and success/failure is revealed
         {
             if (playerSWCGoal != Goal.None)
-                return SWCAssignText() + ": " + SWCSuccessMessage();
+                return SWCAssignText() + ": <size=40%>" + SWCSuccessMessage() + "</size>";
             else
                 return "";
         }
