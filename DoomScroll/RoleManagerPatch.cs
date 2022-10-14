@@ -15,6 +15,7 @@ namespace DoomScroll
         [HarmonyPatch("SelectRoles")]
         public static void PostfixSelectRoles(RoleManager __instance)
         {
+            /*
             Logger<DoomScrollPlugin>.Info("Select Roles Patch is running!!\n There should be Secondary Win Conditions below:\n");
             SecondaryWinConditionHolder.clearPlayerSWCList(); // ensures list is empty before filling it
 
@@ -34,7 +35,7 @@ namespace DoomScroll
                     Logger<DoomScrollPlugin>.Info("PID: " + secWinCondCrewmate.getPlayerID() + ", SWC: " + secWinCondCrewmate.getSWC());
                 }
             }
-
+            */
         }
     }
 }
