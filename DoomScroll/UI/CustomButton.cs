@@ -34,7 +34,8 @@ namespace DoomScroll.UI
             m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
             SetButtonImg(ImageType.DEFAULT);
             // size has to be set after setting the image!
-            m_spriteRenderer.size = scaledsize;
+            //make sure the images are sized correctly and scaled proportionately 
+            m_spriteRenderer.size = new Vector2(scaledsize.x, m_spriteRenderer.sprite.rect.height * scaledsize.x/ m_spriteRenderer.sprite.rect.width);
 
             ActivateButton(true);
             EnableButton(true);

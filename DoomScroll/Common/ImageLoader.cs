@@ -30,7 +30,10 @@ namespace DoomScroll.Common
             return Sprite.Create(
                 tex,
                 new Rect(0, 0, tex.width, tex.height),
-                new Vector2(0.5f, 0.5f)
+                new Vector2(0.5f, 0.5f),
+                100.0f,
+                0,
+                SpriteMeshType.FullRect
             );
         }
 
@@ -47,8 +50,10 @@ namespace DoomScroll.Common
                 spriteArray[i] = Sprite.Create(
                     tex,
                     new Rect(tex.width * slices[i].x, tex.height * slices[i].y, tex.width * slices[i].z - tex.width * slices[i].x, tex.height * slices[i].w  - tex.height * slices[i].y),
-                    new Vector2(0.5f, 0.5f), 
-                    1.0f
+                    new Vector2(0.5f, 0.5f),
+                    100.0f,
+                    0,
+                    SpriteMeshType.FullRect
                 );
             }
             return spriteArray;

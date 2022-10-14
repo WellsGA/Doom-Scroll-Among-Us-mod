@@ -64,11 +64,13 @@ namespace DoomScroll
         [HarmonyPatch("CoFadeFullScreen")]
         public static void PostfixCoFadeFullScreen(HudManager __instance, ref Color target)
         {
-            if (__instance.FullScreen.gameObject.activeSelf && __instance.FullScreen.color == target) 
+            ScreenshotManager.Instance.CameraButton.ActivateButton(true);
+            Logger<DoomScrollPlugin>.Info("HudManager.CoFadeFullScreen ---- CAMERA ACTIVE");
+           /* if (__instance.FullScreen.gameObject.activeSelf && __instance.FullScreen.color == target) 
             {
                 ScreenshotManager.Instance.CameraButton.ActivateButton(true);
                 Logger<DoomScrollPlugin>.Info("HudManager.CoFadeFullScreen ---- CAMERA ACTIVE");
-            }
+            }*/
         }
 
         [HarmonyPostfix]
