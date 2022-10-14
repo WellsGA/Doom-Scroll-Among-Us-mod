@@ -28,7 +28,7 @@ namespace DoomScroll
             PrevFolder.MyAction += FolderManager.Instance.OnClickBackButton;
         }
 
-        [HarmonyPostfix]
+        /*[HarmonyPostfix]
         [HarmonyPatch("Update")]
         public static void PostfixUpdate()
         {
@@ -57,7 +57,7 @@ namespace DoomScroll
             {
                 Logger<DoomScrollPlugin>.Error("Error invoking method: " + e);
             }
-        }
+        }*/
 
         [HarmonyPostfix]
         // [HarmonyPatch(typeof(HudManager._CoFadeFullScreen_d__66), "MoveNext")]
