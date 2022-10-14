@@ -24,13 +24,13 @@ namespace DoomScroll
                     PlayerSWCTracker secWinCondImpostor = new PlayerSWCTracker(player.PlayerId);
                     secWinCondImpostor.impostorSWC();
                     SecondaryWinConditionHolder.addToPlayerSWCList(secWinCondImpostor);
-                    Logger<DoomScrollPlugin>.Info("" + secWinCondImpostor.getPlayerID() + ", SWC: " + secWinCondImpostor.getSWC());
+                    Logger<DoomScrollPlugin>.Info("PID:" + secWinCondImpostor.getPlayerID() + ", Player Name: " + IntroCutscenePatch.getPlayerNameFromID(secWinCondImpostor.getPlayerID()) + ", SWC: " + secWinCondImpostor.getSWC().SWCAssignText());
                 }
                 else if (!player.Role.IsImpostor)
                 {
                     PlayerSWCTracker secWinCondCrewmate = new PlayerSWCTracker(player.PlayerId);
                     SecondaryWinConditionHolder.addToPlayerSWCList(secWinCondCrewmate);
-                    Logger<DoomScrollPlugin>.Info("PID: " + secWinCondCrewmate.getPlayerID() + ", SWC: " + secWinCondCrewmate.getSWC());
+                    Logger<DoomScrollPlugin>.Info("PID: " + secWinCondCrewmate.getPlayerID() + ", Player Name: " + IntroCutscenePatch.getPlayerNameFromID(secWinCondCrewmate.getPlayerID()) + ", SWC: " + secWinCondCrewmate.getSWC().SWCAssignText());
                 }
             }
         }
@@ -56,13 +56,13 @@ namespace DoomScroll
                     PlayerSWCTracker secWinCondImpostor = new PlayerSWCTracker(player.PlayerId);
                     secWinCondImpostor.impostorSWC();
                     SecondaryWinConditionHolder.addToPlayerSWCList(secWinCondImpostor);
-                    Logger<DoomScrollPlugin>.Info("" + secWinCondImpostor.getPlayerID() + ", SWC: " + secWinCondImpostor.getSWC());
+                    Logger<DoomScrollPlugin>.Info("PID:" + secWinCondImpostor.getPlayerID() + ", SWC: " + secWinCondImpostor.getSWC().SWCAssignText());
                 }
                 else if (!player.Role.IsImpostor)
                 {
                     PlayerSWCTracker secWinCondCrewmate = new PlayerSWCTracker(player.PlayerId);
                     SecondaryWinConditionHolder.addToPlayerSWCList(secWinCondCrewmate);
-                    Logger<DoomScrollPlugin>.Info("PID: " + secWinCondCrewmate.getPlayerID() + ", SWC: " + secWinCondCrewmate.getSWC());
+                    Logger<DoomScrollPlugin>.Info("PID: " + secWinCondCrewmate.getPlayerID() + ", SWC: " + secWinCondCrewmate.getSWC().SWCAssignText());
                 }
             }
         }
@@ -81,6 +81,19 @@ namespace DoomScroll
         {
             __instance.RoleText.text += "\n<size=10%><color=\"white\">Secondary Win Condition: " + SecondaryWinConditionHolder.getSomePlayerSWC(PlayerControl.LocalPlayer._cachedData.PlayerId).SWCAssignText() + "</color></size>";
             //will replace "TESTCONDITION" with SecondaryWinConditionHolder.getSomePlayerSWC(PlayerControl.LocalPlayer._cachedData.PlayerId).SWCAssignText();
+        }
+
+
+        public static string getPlayerNameFromID(byte playID)
+        {
+            foreach (GameData.PlayerInfo playerInfo in GameData.Instance.AllPlayers)
+            {
+                if (playerInfo.PlayerId == playID)
+                {
+                    return playerInfo.PlayerName;
+                }
+            }
+            return "";
         }
     }
 }
