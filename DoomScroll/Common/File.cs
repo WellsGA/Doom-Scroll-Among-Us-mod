@@ -17,17 +17,17 @@ namespace DoomScroll.Common
         private CustomButton fileBtn;
         private FileType type;
         private byte[] content;
-
-        private GameObject parentUI = FolderManager.Instance.FolderHolder;
-        public File(string parentPath, string name, byte[] image)
+        private GameObject parentUI;
+        public File(string parentPath, GameObject parent, string name, byte[] image)
         {
             this.name = name;
             path = parentPath + "/" + name;
+            parentUI = parent;
             content = image;
-            Sprite[] images = { ImageLoader.ReadImageFromByteArray(content) };
-            
-            fileBtn = new CustomButton(parentUI, images, parentUI.transform.position, parentUI.GetComponent<SpriteRenderer>().size / 5, name);
+            Sprite[] images = { ImageLoader.ReadImageFromByteArray(content) };       
+            fileBtn = new CustomButton(parentUI, images, parentUI.transform.position, parentUI.GetComponent<SpriteRenderer>().size.x / 5, name);
             new CustomText(name, fileBtn.ButtonGameObject, name);
+            fileBtn.ActivateButton(false);
         }
         public string GetName()
         {
@@ -43,11 +43,10 @@ namespace DoomScroll.Common
         }
         public void DisplayContent() 
         {
-            // display the content of the file 
+            // display the content of the file -- TO DO
             switch (type) 
             {
                 case FileType.IMAGE:
-
                     return;
                 case FileType.MAPSOURCE:
                     return;

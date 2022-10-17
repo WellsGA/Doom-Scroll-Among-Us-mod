@@ -7,7 +7,6 @@ namespace DoomScroll.Common
     public class DoomScrollEvent
     {
         public event Action MyAction;
-
         public void InvokeAction() 
         {
             MyAction?.Invoke();

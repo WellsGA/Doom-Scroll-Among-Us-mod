@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DoomScroll.Common;
 using Reactor;
 
 
@@ -11,6 +12,8 @@ namespace DoomScroll.UI
     // Creates and manages custom buttnos
     public class CustomButton
     {
+        public DoomScrollEvent ButtonEvent = new DoomScrollEvent();
+
         public GameObject ButtonGameObject { get; private set; }
         // private BoxCollider2D m_collider;
         private SpriteRenderer m_spriteRenderer;
@@ -20,25 +23,51 @@ namespace DoomScroll.UI
         public bool IsActive { get; private set; }
        
 
-        public CustomButton(GameObject parent, Sprite[] images, Vector3 position, Vector2 scaledsize, string name)
+        public CustomButton(GameObject parent, Sprite[] images, Vector3 position, float scaledX, string name)
         {
-            ButtonGameObject = new GameObject();
+            ButtonGameObject = new GameObject(name);
             ButtonGameObject.layer = LayerMask.NameToLayer("UI");
-            ButtonGameObject.name = name;
-            ButtonGameObject.transform.SetParent(parent.transform, true);
-            ButtonGameObject.transform.localPosition = position;
-           // m_collider = ButtonGameObject.AddComponent<BoxCollider2D>();
-            
+            SetParent(parent);
+            SetLocalPosition(position);
             buttonIcons = images;
             m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
             m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
             SetButtonImg(ImageType.DEFAULT);
             // size has to be set after setting the image!
             //make sure the images are sized correctly and scaled proportionately 
-            m_spriteRenderer.size = new Vector2(scaledsize.x, m_spriteRenderer.sprite.rect.height * scaledsize.x/ m_spriteRenderer.sprite.rect.width);
+            ScaleSize(scaledX);
+            ActivateButton(true);
+            EnableButton(true);
+        }
+
+        public CustomButton( GameObject parent, Sprite[] images, string name)
+        {
+            ButtonGameObject = new GameObject(name);
+            ButtonGameObject.layer = LayerMask.NameToLayer("UI");
+            SetParent(parent);
+            buttonIcons = images;
+            m_spriteRenderer = ButtonGameObject.AddComponent<SpriteRenderer>();
+            m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
+            SetButtonImg(ImageType.DEFAULT);
+            // size has to be set after setting the image!
 
             ActivateButton(true);
             EnableButton(true);
+        }
+
+        public void SetLocalPosition(Vector3 pos)
+        {
+            ButtonGameObject.transform.localPosition = pos;
+        }
+
+        public void ScaleSize(float scaledWidth) 
+        {
+            m_spriteRenderer.size = new Vector2(scaledWidth, m_spriteRenderer.sprite.rect.height * scaledWidth / m_spriteRenderer.sprite.rect.width);
+
+        }
+        public void SetParent(GameObject parent)
+        {
+            ButtonGameObject.transform.SetParent(parent.transform, true);
         }
 
         public bool isHovered()
@@ -53,7 +82,7 @@ namespace DoomScroll.UI
             return isInBoundsX && isInBoundsY && IsEnabled && IsActive;
         }
 
-        public void SetButtonImg(ImageType type)
+        private void SetButtonImg(ImageType type)
         {
             switch (type) {
                 case ImageType.DEFAULT:
@@ -99,11 +128,6 @@ namespace DoomScroll.UI
         {
             IsActive = value;
             ButtonGameObject.SetActive(value);   
-        }
-
-        public void SetLocalPosition(Vector3 pos) 
-        {
-            ButtonGameObject.transform.localPosition = pos;
-        }
+        }     
     }
 }

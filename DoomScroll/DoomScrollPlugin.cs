@@ -15,11 +15,8 @@ namespace DoomScroll {
 
         public override void Load()
         {
-
-            Logger<DoomScrollPlugin>.Info(" ---------  DoomScroll Plugin Loaded ---------");
-
+            Logger<DoomScrollPlugin>.Info(" ---------  DoomScroll Plugin Loaded ---------");         
             Harmony.PatchAll();
-
         }
 
     }
