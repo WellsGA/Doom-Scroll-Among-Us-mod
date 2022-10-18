@@ -13,10 +13,10 @@ namespace DoomScroll
         private byte playerSWCTarget;
         private bool targetIsVotedOut = false;
 
-        public SecondaryWinCondition()
+        public SecondaryWinCondition(byte pID)
         {
             assignGoal();
-            assignTarget();
+            assignTarget(pID);
         }
 
         public Goal getPlayerSWCGoal()
@@ -76,10 +76,31 @@ namespace DoomScroll
             playerSWCTarget = byte.MaxValue;
         }
 
-        public void assignTarget()
+        public void assignTarget(byte pID)
         {
+            /*List< GameData.PlayerInfo > otherPlayers = GameData.Instance.AllPlayers;
+            foreach (GameData.PlayerInfo playerInfo in GameData.Instance.AllPlayers)
+            {
+                
+            }
+            otherPlayers.Remove*/
+
             int numPlayers = GameData.Instance.AllPlayers.Count;
+            int playerindex = -1;
+            for (int i = 0; i < numPlayers; i++)
+            {
+                if (GameData.Instance.AllPlayers[i].PlayerId == pID)
+                {
+                    playerindex = i;
+                    break;
+                }
+            }
             int targetNum = UnityEngine.Random.Range(0, numPlayers - 1);
+            while (targetNum == playerindex)
+            {
+                targetNum = UnityEngine.Random.Range(0, numPlayers - 1);
+            }
+
             for (int i = 0; i < numPlayers; i++)
             {
                 if (i == targetNum)

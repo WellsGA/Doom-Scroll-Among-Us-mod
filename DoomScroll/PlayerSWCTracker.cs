@@ -15,7 +15,7 @@ namespace DoomScroll
         public PlayerSWCTracker(byte pID)
         {
             PlayerID = pID;
-            SWC = new SecondaryWinCondition();
+            SWC = new SecondaryWinCondition(pID);
         }
 
         public void impostorSWC()
