@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5xv63TRu9dovpyKAcJn0QRb2qMmpeG8DGep2tSB3EeTljPiD0HYoNEkZSh9SgVEBOrhBNdCD5vSccmN/qt3s8w==",
+  "dgSpecHash": "c7q8Ny5Cbh+xlxALsxQ/WSfVp0MeW8ixzR9k94cW2J3P8lgtSMVQr8muRfFLKaBR1tS1qa0Vev9CQaD97wDPIQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Esports Research Lab\\Desktop\\GitAmongUsMod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
+  "projectFilePath": "C:\\Users\\Esports Research Lab\\Desktop\\Among Us Mod\\Doom-Scroll-Among-Us-mod\\DoomScroll\\DoomScroll.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Esports Research Lab\\.nuget\\packages\\amongus.gamelibs.steam\\2022.6.21\\amongus.gamelibs.steam.2022.6.21.nupkg.sha512",
     "C:\\Users\\Esports Research Lab\\.nuget\\packages\\bepinex.autoplugin\\1.0.1\\bepinex.autoplugin.1.0.1.nupkg.sha512",
