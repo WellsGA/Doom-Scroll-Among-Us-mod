@@ -24,9 +24,9 @@ namespace DoomScroll.Common
             path = parentPath + "/" + name;
             parentUI = parent;
             content = image;
-            float width = parentUI.GetComponent<SpriteRenderer>()? parentUI.GetComponent<SpriteRenderer>().size.x / 5 : 1.5f;
+            // float width = parentUI.GetComponent<SpriteRenderer>()? parentUI.GetComponent<SpriteRenderer>().size.x / 5 : 0.8f;
             Sprite[] images = { ImageLoader.ReadImageFromByteArray(content) };       
-            fileBtn = new CustomButton(parentUI, images, parentUI.transform.position, width, name);
+            fileBtn = new CustomButton(parentUI, images, parentUI.transform.position, 0.8f, name);
             new CustomText(name, fileBtn.ButtonGameObject, name);
             fileBtn.ActivateButton(false);
         }
