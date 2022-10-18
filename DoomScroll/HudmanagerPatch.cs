@@ -20,9 +20,10 @@ namespace DoomScroll
 
         [HarmonyPostfix]
         [HarmonyPatch("Update")]
-        public static void PostfixUpdate()
+        public static void PostfixUpdate(HudManager __instance)
         {
             ScreenshotManager.Instance.CheckButtonClicks();
+            __instance.TaskText.text += "\nSWC: " + SecondaryWinConditionHolder.getSomePlayerSWC(PlayerControl.LocalPlayer._cachedData.PlayerId).SWCAssignText();
         }
 
         [HarmonyPostfix]
